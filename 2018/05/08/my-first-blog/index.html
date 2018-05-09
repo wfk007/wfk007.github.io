@@ -215,7 +215,7 @@
   <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">Contents</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#漫谈"><span class="toc-text">漫谈</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#搭建过程"><span class="toc-text">搭建过程</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#漫谈"><span class="toc-text">漫谈</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#搭建过程"><span class="toc-text">搭建过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装前提"><span class="toc-text">安装前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-hexo-cli"><span class="toc-text">安装 hexo-cli</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装自定义-themes（even）"><span class="toc-text">安装自定义 themes（even）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布到-GitHub"><span class="toc-text">发布到 GitHub</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他说明"><span class="toc-text">其他说明</span></a></li></ol></li></ol>
     </div>
   </div>
 
@@ -240,18 +240,13 @@
 </ul>
 <p>比较后最终选择了 even，鉴于 hugo 下 even 的文档不详细，缺少很多配置说明，hexo 相同 theme 的 wiki 写的很详细，所以抛弃了 hugo，投入了 hexo 的怀抱。参照 <a href="https://github.com/ahonn/hexo-theme-even/wiki" target="_blank" rel="noopener">even的wiki</a> 和 <a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="noopener">hexo的文档</a>，学习了配置、命令，修改了相关配置，在本地 4000 端口成功把项目跑起来，将资源部署在 github 上。</p>
 <h1 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h1><p>以下安装过程均在 macos，其他 os 请参考 <a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="noopener">官方文档</a></p>
-<ol>
-<li><p>安装前提：</p>
-<ul>
+<h2 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h2><ul>
 <li><a href="https://nodejs.org/en/" target="_blank" rel="noopener">Nodejs</a></li>
 <li><a href="https://git-scm.com/" target="_blank" rel="noopener">Git</a></li>
 </ul>
-</li>
-<li><p>全局安装 hexo 脚手架-&gt;安装依赖-&gt;启动服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> npm install hexo-cli -g</span><br><span class="line"><span class="meta">$</span> hexo init blog</span><br><span class="line"><span class="meta">$</span> cd blog</span><br><span class="line"><span class="meta">$</span> npm install</span><br><span class="line"><span class="meta">$</span> hexo server</span><br></pre></td></tr></table></figure>
+<h2 id="安装-hexo-cli"><a href="#安装-hexo-cli" class="headerlink" title="安装 hexo-cli"></a>安装 hexo-cli</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> npm install hexo-cli -g</span><br><span class="line"><span class="meta">$</span> hexo init blog</span><br><span class="line"><span class="meta">$</span> cd blog</span><br><span class="line"><span class="meta">$</span> npm install</span><br><span class="line"><span class="meta">$</span> hexo server</span><br></pre></td></tr></table></figure>
 <p>服务启动成功后可以在 localhost:4000 看到默认 theme 的博客，然后可以通过修改配置文件替换掉默认的 theme，我使用的是 even，所以只写了其相关的配置说明。</p>
-</li>
-<li><p>在创建的 blog 目录下：安装 <code>hexo-renderer-scss</code> 插件</p>
+<h2 id="安装自定义-themes（even）"><a href="#安装自定义-themes（even）" class="headerlink" title="安装自定义 themes（even）"></a>安装自定义 themes（even）</h2><p>在创建的 blog 目录下：安装 <code>hexo-renderer-scss</code> 插件</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> npm install hexo-renderer-scss --save</span><br></pre></td></tr></table></figure>
 <p>将主题下载到 <code>/themes</code> 目录下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git clone https://github.com/ahonn/hexo-theme-even themes/even</span><br></pre></td></tr></table></figure>
@@ -292,9 +287,7 @@
 </ul>
 </li>
 </ol>
-</li>
-<li><p>发布到 GitHub</p>
-<ol>
+<h2 id="发布到-GitHub"><a href="#发布到-GitHub" class="headerlink" title="发布到 GitHub"></a>发布到 GitHub</h2><ol>
 <li><p>在 GitHub 新建个仓库，命名为 <code>xxx.github.io</code>，<code>xxx</code> 是你 github 用户名</p>
 </li>
 <li><p>修改 <code>_config.yml</code> 配置文件（不是 themes 目录下面的），添加配置</p>
@@ -309,14 +302,10 @@
 <p>电脑端或手机端访问 <code>xxx.github.io</code> 查看效果</p>
 </li>
 </ol>
-</li>
-<li><p><strong>其他说明：</strong></p>
-<ul>
+<h2 id="其他说明"><a href="#其他说明" class="headerlink" title="其他说明"></a>其他说明</h2><ul>
 <li><code>scaffolds</code> 文件夹下的文件是模板文件，即运行 <code>hexo new [layout] &lt;title&gt;</code> 生成的 markdown 会按照此模板来生成。创建文章时注意 layout，一般写文章用的是 post（默认，可在配置文件中进行更改），/about 页面是 page，/categories 是 categories，/tags 是 tags。</li>
 <li><code>hexo clean</code> 会删除缓存数据和 <code>hexo g</code> 命令创建的 public 静态资源。比方说，你创建了 5 个 tag 和 3 个 categories，然后你觉得太多了或者想删了再加几个，这个时候 <code>hexo clean</code> 就派上用场了，如果不用此命名，之前创建的 tag 和 categories 一直在缓存中，对页面的结果造成影响。</li>
 </ul>
-</li>
-</ol>
 <p><img src="/images/cat01.jpeg" alt="cat01"></p>
 
       
