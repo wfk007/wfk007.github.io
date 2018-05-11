@@ -215,7 +215,7 @@
   <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">Contents</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#漫谈"><span class="toc-text">漫谈</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#搭建过程"><span class="toc-text">搭建过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装前提"><span class="toc-text">安装前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-hexo-cli"><span class="toc-text">安装 hexo-cli</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装自定义-themes（even）"><span class="toc-text">安装自定义 themes（even）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布到-GitHub"><span class="toc-text">发布到 GitHub</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他说明"><span class="toc-text">其他说明</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#漫谈"><span class="toc-text">漫谈</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#搭建过程"><span class="toc-text">搭建过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装前提"><span class="toc-text">安装前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-hexo-cli"><span class="toc-text">安装 hexo-cli</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装自定义-themes（even）"><span class="toc-text">安装自定义 themes（even）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布到-GitHub"><span class="toc-text">发布到 GitHub</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他说明"><span class="toc-text">其他说明</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
     </div>
   </div>
 
@@ -306,6 +306,10 @@
 <li><code>scaffolds</code> 文件夹下的文件是模板文件，即运行 <code>hexo new [layout] &lt;title&gt;</code> 生成的 markdown 会按照此模板来生成。创建文章时注意 layout，一般写文章用的是 post（默认，可在配置文件中进行更改），/about 页面是 page，/categories 是 categories，/tags 是 tags。</li>
 <li><code>hexo clean</code> 会删除缓存数据和 <code>hexo g</code> 命令创建的 public 静态资源。比方说，你创建了 5 个 tag 和 3 个 categories，然后你觉得太多了或者想删了再加几个，这个时候 <code>hexo clean</code> 就派上用场了，如果不用此命名，之前创建的 tag 和 categories 一直在缓存中，对页面的结果造成影响。</li>
 </ul>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ul>
+<li><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">hexo文档</a></li>
+<li><a href="https://github.com/ahonn/hexo-theme-even/wiki" target="_blank" rel="noopener">evenWiki</a></li>
+</ul>
 <p><img src="/images/cat01.jpeg" alt="cat01"></p>
 
       
@@ -319,6 +323,24 @@
 
       
       
+  <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden />
+    <label class="reward-button" for="reward">Reward</label>
+    <div class="qr-code">
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/wechat.png" title="wechat">
+        </label>
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/alipay.png" title="alipay">
+        </label>
+      
+    </div>
+  </div>
+
     
 
     
@@ -350,6 +372,13 @@
           </div>
           
   <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
     
   </div>
 
@@ -428,6 +457,22 @@
 
     
   
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2018/05/08/my-first-blog/';
+        this.page.identifier = '2018/05/08/my-first-blog/';
+        this.page.title = '个人博客';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//anduins-blog.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
   
 
   
