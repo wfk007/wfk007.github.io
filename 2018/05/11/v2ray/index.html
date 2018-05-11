@@ -17,12 +17,12 @@
 
 
 
-  <meta name="description" content="给 even 主题添加 Disqus 评论服务"/>
+  <meta name="description" content="搭建 vps 服务器实现翻墙"/>
 
 
 
 
-  <meta name="keywords" content="hexo, even, Anduin's Blog" />
+  <meta name="keywords" content="v2ray, Anduin's Blog" />
 
 
 
@@ -42,7 +42,7 @@
 
 
 
-<link rel="canonical" href="http://yoursite.com/2018/05/11/hexo-even-comment/"/>
+<link rel="canonical" href="http://yoursite.com/2018/05/11/v2ray/"/>
 
 
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
@@ -89,7 +89,7 @@
 
 
 
-    <title> 添加 Disqus 评论服务 - Anduin's Blog </title>
+    <title> v2ray - Anduin's Blog </title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -205,7 +205,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          添加 Disqus 评论服务
+          v2ray
         
       </h1>
 
@@ -216,8 +216,8 @@
         
         
         <div class="post-visits"
-             data-url="/2018/05/11/hexo-even-comment/"
-             data-title="添加 Disqus 评论服务">
+             data-url="/2018/05/11/v2ray/"
+             data-title="v2ray">
             阅读次数
           </div>
         
@@ -229,37 +229,21 @@
   <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">Contents</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#教程"><span class="toc-text">教程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#step1：主页"><span class="toc-text">step1：主页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step2：注册"><span class="toc-text">step2：注册</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step3：选择功能"><span class="toc-text">step3：选择功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step4：创建网站"><span class="toc-text">step4：创建网站</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step5：订阅"><span class="toc-text">step5：订阅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step6：修改配置文件"><span class="toc-text">step6：修改配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step7：填写网站地址"><span class="toc-text">step7：填写网站地址</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#修改头像"><span class="toc-text">修改头像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除网站"><span class="toc-text">删除网站</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考链接"><span class="toc-text">参考链接</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#漫谈"><span class="toc-text">漫谈</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#资源"><span class="toc-text">资源</span></a></li></ol>
     </div>
   </div>
 
 
     <div class="post-content">
       
-        <h1 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h1><p><a href="https://github.com/ahonn/hexo-theme-even/wiki/%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA%E6%9C%8D%E5%8A%A1" target="_blank" rel="noopener">Wiki</a> 上提供了 <a href="https://disqus.com/" target="_blank" rel="noopener">Disqus</a> 和 <a href="https://changyan.kuaizhan.com/" target="_blank" rel="noopener">搜狐畅言</a> 两种方式，头铁选择了英文。</p>
-<h2 id="step1：主页"><a href="#step1：主页" class="headerlink" title="step1：主页"></a>step1：主页</h2><p>访问主页，点击 <code>GET STARTED</code></p>
-<p><img src="/images/hexo-even-comment/1.jpeg" alt="step1"></p>
-<h2 id="step2：注册"><a href="#step2：注册" class="headerlink" title="step2：注册"></a>step2：注册</h2><p><img src="/images/hexo-even-comment/2.jpeg" alt="step2"></p>
-<h2 id="step3：选择功能"><a href="#step3：选择功能" class="headerlink" title="step3：选择功能"></a>step3：选择功能</h2><p>选择 <code>I want to install Disqus on my site</code></p>
-<p><img src="/images/hexo-even-comment/3.jpeg" alt="step3"></p>
-<h2 id="step4：创建网站"><a href="#step4：创建网站" class="headerlink" title="step4：创建网站"></a>step4：创建网站</h2><ul>
-<li><code>Website Name</code> 填写网站的名字，此名字会作为配置文件的 <code>disqus_shortname</code> 属性值</li>
-<li><code>Category</code>：网站的类别，我这里创建的是技术类</li>
-</ul>
-<p><img src="/images/hexo-even-comment/4.jpeg" alt="step4"></p>
-<h2 id="step5：订阅"><a href="#step5：订阅" class="headerlink" title="step5：订阅"></a>step5：订阅</h2><p>订阅图上所示的 <code>Free</code>：针对小型，个人、非盈利性，不提供任何广告的网站。除了 <code>Plus</code> 中的 <code>Direct Email Support</code>，其他特性都支持。</p>
-<p><img src="/images/hexo-even-comment/5.jpeg" alt="step5"></p>
-<h2 id="step6：修改配置文件"><a href="#step6：修改配置文件" class="headerlink" title="step6：修改配置文件"></a>step6：修改配置文件</h2><p>修改配置文件：修改主题配置文件中的 <code>disqus_shortname</code> 字段为图上选中的值</p>
-<p><img src="/images/hexo-even-comment/6.jpeg" alt="step6"></p>
-<h2 id="step7：填写网站地址"><a href="#step7：填写网站地址" class="headerlink" title="step7：填写网站地址"></a>step7：填写网站地址</h2><p>填写 <code>Website URL</code> 字段，即博客的公网服务器地址，其他默认即可。</p>
-<p><img src="/images/hexo-even-comment/7.jpeg" alt="step7"></p>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="修改头像"><a href="#修改头像" class="headerlink" title="修改头像"></a>修改头像</h2><p><code>Settings</code>-&gt;<code>General</code></p>
-<p><img src="/images/hexo-even-comment/8.jpeg" alt="step8"></p>
-<h2 id="删除网站"><a href="#删除网站" class="headerlink" title="删除网站"></a>删除网站</h2><p><code>Setting</code>-&gt;<code>Advanced</code>-&gt;<code>Delete site and comments</code></p>
-<p><img src="/images/hexo-even-comment/9.jpeg" alt="step9"></p>
-<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
-<li><a href="https://github.com/ahonn/hexo-theme-even/wiki/%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA%E6%9C%8D%E5%8A%A1" target="_blank" rel="noopener">evenWiki</a></li>
-<li><a href="https://www.youtube.com/watch?v=Dr6pSdeJgkA" target="_blank" rel="noopener">官方视频介绍</a>：需翻墙；无字幕，需要良好的英语听力能力；此链接会在注册网站之后发到你的邮箱</li>
+        <h1 id="漫谈"><a href="#漫谈" class="headerlink" title="漫谈"></a>漫谈</h1><p>要翻墙首先要有一个能和墙外世界通信的服务器，<a href="https://www.hostmama.cc/p/212/" target="_blank" rel="noopener">国外优质vps</a>了解一下，然后在服务器上安装 vps 服务端，在需要翻墙的电脑端或手机端安装客户端，具体过程请参考资源中的文档。</p>
+<p>我买了一年 <code>19.9$</code> 的搬瓦工洛杉矶服务器，用支付宝付款，根据当天的汇率算完是 <code>127.49￥</code>。macos 用的是 <a href="https://github.com/Cenmrev/V2RayX" target="_blank" rel="noopener">v2rayx</a> 客户端，iPhone 用的是 <code>Shadowrocket</code> 客户端，配置了服务器节点信息，此软件国区 Apple store 已经下架，美区的 Apple store 可以下载，下载的时候可以将自己的 Apple ID 转到美区，下完了再转回国区，或者嫌麻烦，单独申请一个美区 Apple ID 用于下载非国区 apps。注册的时候需要绑定美国的信用卡或者 <a href="https://www.paypal.com/us/home" target="_blank" rel="noopener">paypal</a>，如果 paypal 和 Apple ID 不在一个区域也不能绑定在一起。安卓客户端使用的是 <code>V2RayNG</code> ，手动配置节点信息，<strong>下载地址：</strong> <a href="https://github.com/2dust/v2rayNG/releases" target="_blank" rel="noopener">release版</a>，说实话，这个下载地址我找了好久才找到的(╯﹏╰)。</p>
+<p>详细步骤请自行 Google。</p>
+<h1 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h1><ul>
+<li><a href="https://www.v2ray.com/" target="_blank" rel="noopener">v2ray官方文档</a></li>
+<li><a href="https://toutyrater.github.io/" target="_blank" rel="noopener">v2ray白话文</a></li>
+<li><a href="https://bandwagonhost.com/" target="_blank" rel="noopener">搬瓦工</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/32811900" target="_blank" rel="noopener">搬瓦工2018新手选购指南</a>​</li>
 </ul>
 
       
@@ -276,7 +260,7 @@
     </p>
     <p class="copyright-item">
       <span>Link: </span>
-      <a href="http://yoursite.com/2018/05/11/hexo-even-comment/">http://yoursite.com/2018/05/11/hexo-even-comment/</a>
+      <a href="http://yoursite.com/2018/05/11/v2ray/">http://yoursite.com/2018/05/11/v2ray/</a>
     </p>
     <p class="copyright-item">
       <span>License: </span>
@@ -314,9 +298,7 @@
         
           <div class="post-tags">
             
-              <a href="/tags/hexo/">hexo</a>
-            
-              <a href="/tags/even/">even</a>
+              <a href="/tags/v2ray/">v2ray</a>
             
           </div>
         
@@ -324,15 +306,9 @@
         
   <nav class="post-nav">
     
-      <a class="prev" href="/2018/05/11/v2ray/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">v2ray</span>
-        <span class="prev-text nav-mobile">Prev</span>
-      </a>
     
-    
-      <a class="next" href="/2018/05/08/my-first-blog/">
-        <span class="next-text nav-default">个人博客</span>
+      <a class="next" href="/2018/05/11/hexo-even-comment/">
+        <span class="next-text nav-default">添加 Disqus 评论服务</span>
         <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
       </a>
@@ -435,9 +411,9 @@
   
   <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'http://yoursite.com/2018/05/11/hexo-even-comment/';
-        this.page.identifier = '2018/05/11/hexo-even-comment/';
-        this.page.title = '添加 Disqus 评论服务';
+        this.page.url = 'http://yoursite.com/2018/05/11/v2ray/';
+        this.page.identifier = '2018/05/11/v2ray/';
+        this.page.title = 'v2ray';
     };
     (function() {
     var d = document, s = d.createElement('script');
