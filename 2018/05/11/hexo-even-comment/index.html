@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="给 even 主题添加 Disqus 评论服务"/>
+
+
+
+
+  <meta name="keywords" content="hexo, even, Anduin's Blog" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Anduin's Blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2018/05/11/hexo-even-comment/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> 添加 Disqus 评论服务 - Anduin's Blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Anduin's Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            Tags
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            About
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Anduin's Blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              Home
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              Archives
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              Tags
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              About
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          添加 Disqus 评论服务
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-05-11
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#教程"><span class="toc-text">教程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#step1：主页"><span class="toc-text">step1：主页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step2：注册"><span class="toc-text">step2：注册</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step3：选择功能"><span class="toc-text">step3：选择功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step4：创建网站"><span class="toc-text">step4：创建网站</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step5：订阅"><span class="toc-text">step5：订阅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step6：修改配置文件"><span class="toc-text">step6：修改配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step7：填写网站地址"><span class="toc-text">step7：填写网站地址</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#修改头像"><span class="toc-text">修改头像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除网站"><span class="toc-text">删除网站</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考链接"><span class="toc-text">参考链接</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h1 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h1><p><a href="https://github.com/ahonn/hexo-theme-even/wiki/%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA%E6%9C%8D%E5%8A%A1" target="_blank" rel="noopener">Wiki</a> 上提供了 <a href="https://disqus.com/" target="_blank" rel="noopener">Disqus</a> 和 <a href="https://changyan.kuaizhan.com/" target="_blank" rel="noopener">搜狐畅言</a> 两种方式，头铁选择了英文。</p>
+<h2 id="step1：主页"><a href="#step1：主页" class="headerlink" title="step1：主页"></a>step1：主页</h2><p>访问主页，点击 <code>GET STARTED</code></p>
+<p><img src="/images/hexo-even-comment/1.jpeg" alt="step1"></p>
+<h2 id="step2：注册"><a href="#step2：注册" class="headerlink" title="step2：注册"></a>step2：注册</h2><p><img src="/images/hexo-even-comment/2.jpeg" alt="step2"></p>
+<h2 id="step3：选择功能"><a href="#step3：选择功能" class="headerlink" title="step3：选择功能"></a>step3：选择功能</h2><p>选择 <code>I want to install Disqus on my site</code></p>
+<p><img src="/images/hexo-even-comment/3.jpeg" alt="step3"></p>
+<h2 id="step4：创建网站"><a href="#step4：创建网站" class="headerlink" title="step4：创建网站"></a>step4：创建网站</h2><ul>
+<li><code>Website Name</code> 填写网站的名字，此名字会作为配置文件的 <code>disqus_shortname</code> 属性值</li>
+<li><code>Category</code>：网站的类别，我这里创建的是技术类</li>
+</ul>
+<p><img src="/images/hexo-even-comment/4.jpeg" alt="step4"></p>
+<h2 id="step5：订阅"><a href="#step5：订阅" class="headerlink" title="step5：订阅"></a>step5：订阅</h2><p>订阅图上所示的 <code>Free</code>：针对小型，个人、非盈利性，不提供任何广告的网站。除了 <code>Plus</code> 中的 <code>Direct Email Support</code>，其他特性都支持。</p>
+<p><img src="/images/hexo-even-comment/5.jpeg" alt="step5"></p>
+<h2 id="step6：修改配置文件"><a href="#step6：修改配置文件" class="headerlink" title="step6：修改配置文件"></a>step6：修改配置文件</h2><p>修改配置文件：修改主题配置文件中的 <code>disqus_shortname</code> 字段为图上选中的值</p>
+<p><img src="/images/hexo-even-comment/6.jpeg" alt="step6"></p>
+<h2 id="step7：填写网站地址"><a href="#step7：填写网站地址" class="headerlink" title="step7：填写网站地址"></a>step7：填写网站地址</h2><p>填写 <code>Website URL</code> 字段，即博客的公网服务器地址，其他默认即可。</p>
+<p><img src="/images/hexo-even-comment/7.jpeg" alt="step7"></p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="修改头像"><a href="#修改头像" class="headerlink" title="修改头像"></a>修改头像</h2><p><code>Settings</code>-&gt;<code>General</code></p>
+<p><img src="/images/hexo-even-comment/8.jpeg" alt="step8"></p>
+<h2 id="删除网站"><a href="#删除网站" class="headerlink" title="删除网站"></a>删除网站</h2><p><code>Setting</code>-&gt;<code>Advanced</code>-&gt;<code>Delete site and comments</code></p>
+<p><img src="/images/hexo-even-comment/9.jpeg" alt="step9"></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><a href="https://github.com/ahonn/hexo-theme-even/wiki/%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA%E6%9C%8D%E5%8A%A1" target="_blank" rel="noopener">evenWiki</a></li>
+<li><a href="https://www.youtube.com/watch?v=Dr6pSdeJgkA" target="_blank" rel="noopener">官方视频介绍</a>：需翻墙；无字幕，需要良好的英语听力能力；此链接会在注册网站之后发到你的邮箱</li>
+</ul>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>Author: </span>
+      <a href="http://yoursite.com">王富康</a>
+    </p>
+    <p class="copyright-item">
+      <span>Link: </span>
+      <a href="http://yoursite.com/2018/05/11/hexo-even-comment/">http://yoursite.com/2018/05/11/hexo-even-comment/</a>
+    </p>
+    <p class="copyright-item">
+      <span>License: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+  <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden />
+    <label class="reward-button" for="reward">Reward</label>
+    <div class="qr-code">
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/wechat.png" title="wechat">
+        </label>
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/alipay.png" title="alipay">
+        </label>
+      
+    </div>
+  </div>
+
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/hexo/">hexo</a>
+            
+              <a href="/tags/even/">even</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2018/05/08/my-first-blog/">
+        <span class="next-text nav-default">个人博客</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wfk007" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">王富康</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2018/05/11/hexo-even-comment/';
+        this.page.identifier = '2018/05/11/hexo-even-comment/';
+        this.page.title = '添加 Disqus 评论服务';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//anduins-blog.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+  
+
+  
+
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>
