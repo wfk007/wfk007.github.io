@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="git 遇到的问题汇总"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Anduin's Blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://wfk007.github.io/2018/10/31/git-encounter-probs/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> git 遇到的问题 - Anduin's Blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Anduin's Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            Categories
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            About
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Anduin's Blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              Home
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              Archives
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              Categories
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              About
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          git 遇到的问题
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-10-31
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/git/">git</a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#use-git-clone-depth-lt-number-gt-to-clone-your-local-version（18-10-31-encountered）"><span class="toc-text">use git clone --depth &lt;number&gt; to clone your local version（18-10-31 encountered）</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h2 id="use-git-clone-depth-lt-number-gt-to-clone-your-local-version（18-10-31-encountered）"><a href="#use-git-clone-depth-lt-number-gt-to-clone-your-local-version（18-10-31-encountered）" class="headerlink" title="use git clone --depth &lt;number&gt; to clone your local version（18-10-31 encountered）"></a>use <code>git clone --depth &lt;number&gt;</code> to clone your local version（18-10-31 encountered）</h2><p>问题背景：</p>
+<blockquote>
+<p>同学在 GitHub 仓库初始化了一个前端空项目，有三个文件：README.MD、.gitignore、LICENSE。</p>
+<p>实际准备开发时，使用 <a href="https://github.com/ant-design/ant-design-pro" target="_blank" rel="noopener">ant-design-pro</a> 作为脚手架， 脚手架中包括这三个文件，但和初始化项目中的内容不同，最终项目的 README 和 LICENSE 使用初始化项目中的，.gitignore 使用 ant-design-pro 里的</p>
+</blockquote>
+<p>使用下面命令，从 GitHub 仓库中直接安装最新的脚手架代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git clone https://github.com/ant-design/ant-design-pro.git --depth=1</span><br></pre></td></tr></table></figure>
+<p>进入 <code>ant-design-pro</code> 目录，删除远程仓库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cd ant-design-pro</span><br><span class="line"><span class="meta">$</span> git remote rm origin</span><br></pre></td></tr></table></figure>
+<p>添加远程仓库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git remote add origin https://github.com/wfk007/test.git</span><br><span class="line"><span class="meta">$</span> git remote -v</span><br><span class="line">origin	https://github.com/wfk007/test.git (fetch)</span><br><span class="line">origin	https://github.com/wfk007/test.git (push)</span><br></pre></td></tr></table></figure>
+<p><strong>执行 <code>git pull</code>，第一个坑来了</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git pull origin master</span><br><span class="line">warning: 没有共同的提交</span><br><span class="line">remote: Enumerating objects: 3, done.</span><br><span class="line">remote: Counting objects: 100% (3/3), done.</span><br><span class="line">remote: Total 3 (delta 0), reused 3 (delta 0), pack-reused 0</span><br><span class="line">展开对象中: 100% (3/3), 完成.</span><br><span class="line">来自 https://github.com/wfk007/test</span><br><span class="line"> * branch            master     -&gt; FETCH_HEAD</span><br><span class="line"> * [新分支]          master     -&gt; origin/master</span><br><span class="line">fatal: 拒绝合并无关的历史</span><br></pre></td></tr></table></figure>
+<p>在 <a href="https://stackoverflow.com/questions/37937984/git-refusing-to-merge-unrelated-histories-on-rebase" target="_blank" rel="noopener">stackoverflow</a> 上找到加 <code>--allow-unrelated-histories</code> 的解决方案，再次执行命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git pull origin master --allow-unrelated-histories</span><br></pre></td></tr></table></figure>
+<p>手动解决冲突、推到远程仓库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git add -A</span><br><span class="line"><span class="meta">$</span> git commit -m':sparkles: ant-design-pro'</span><br><span class="line"><span class="meta">$</span> git push origin master</span><br></pre></td></tr></table></figure>
+<p><strong>执行 <code>git push</code> 的时候，终端又报错了，第二个坑来了</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git push origin master</span><br><span class="line">枚举对象: 494, 完成.</span><br><span class="line">对象计数中: 100% (494/494), 完成.</span><br><span class="line">使用 8 个线程进行压缩</span><br><span class="line">压缩对象中: 100% (440/440), 完成.</span><br><span class="line">写入对象中: 100% (490/490), 254.47 KiB | 84.82 MiB/s, 完成.</span><br><span class="line">总共 490 （差异 40），复用 469 （差异 30）</span><br><span class="line">remote: Resolving deltas: 100% (40/40), completed with 1 local object.</span><br><span class="line">To https://github.com/wfk007/test.git</span><br><span class="line"> ! [remote rejected] master -&gt; master (shallow update not allowed)</span><br><span class="line">error: 推送一些引用到 'https://github.com/wfk007/test.git' 失败</span><br></pre></td></tr></table></figure>
+<p><a href="https://stackoverflow.com/questions/28983842/remote-rejected-shallow-update-not-allowed-after-changing-git-remote-url" target="_blank" rel="noopener">stackoverflow</a> 又来续命，似乎是在克隆时使用 –depth \<number> 的问题</number></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git remote add old https://github.com/ant-design/ant-design-pro.git</span><br><span class="line"><span class="meta">$</span> git fetch --unshallow old</span><br></pre></td></tr></table></figure>
+<p>再执行 <code>git push origin master</code> 成功，成功后记得使用 <code>git remote rm old</code>，删除远程 old 仓库</p>
+<p>The end.</p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>Author: </span>
+      <a href="http://wfk007.github.io">王富康</a>
+    </p>
+    <p class="copyright-item">
+      <span>Link: </span>
+      <a href="http://wfk007.github.io/2018/10/31/git-encounter-probs/">http://wfk007.github.io/2018/10/31/git-encounter-probs/</a>
+    </p>
+    <p class="copyright-item">
+      <span>License: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+  <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden />
+    <label class="reward-button" for="reward">Reward</label>
+    <div class="qr-code">
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/wechat.png" title="wechat">
+        </label>
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/alipay.png" title="alipay">
+        </label>
+      
+    </div>
+  </div>
+
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2018/09/20/resources-collection/">
+        <span class="next-text nav-default">资源汇总</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://leetcode.com/wfk007" class="iconfont icon-LeetCode" title="LeetCode"></a>
+        
+      
+    
+      
+        
+          <a href="https://github.com/wfk007" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">王富康</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://wfk007.github.io/2018/10/31/git-encounter-probs/';
+        this.page.identifier = '2018/10/31/git-encounter-probs/';
+        this.page.title = 'git 遇到的问题';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//anduins-blog.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+  
+
+  
+
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>
