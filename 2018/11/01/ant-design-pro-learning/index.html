@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="ant-design-pro 整理"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Anduin's Blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://wfk007.github.io/2018/11/01/ant-design-pro-learning/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> ant-design-pro - Anduin's Blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Anduin's Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            Categories
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            About
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Anduin's Blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              Home
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              Archives
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              Categories
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              About
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          ant-design-pro
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-11-01
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/FE/">FE</a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BasicLayout"><span class="toc-text">BasicLayout</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#umi报错"><span class="toc-text">umi报错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见错误"><span class="toc-text">常见错误</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Table-中数据的-key-未指定"><span class="toc-text">Table 中数据的 key 未指定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FormItem-中出现多个-getFieldDecorator"><span class="toc-text">FormItem 中出现多个 getFieldDecorator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Form-自定义-validator-校验时，callback-必须被调用"><span class="toc-text">Form 自定义 validator 校验时，callback 必须被调用</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h2 id="BasicLayout"><a href="#BasicLayout" class="headerlink" title="BasicLayout"></a>BasicLayout</h2><ul>
+<li><p><a href="https://github.com/gaearon/react-document-title" target="_blank" rel="noopener">react-document-title</a>：Declarative, nested, stateful, isomorphic document.title for React</p>
+</li>
+<li><p><a href="https://github.com/alexreardon/memoize-one" target="_blank" rel="noopener">memoize-one</a>：A memoization library which only remembers the latest invocation</p>
+</li>
+<li><p><a href="https://github.com/d6u/react-container-query" target="_blank" rel="noopener">react-container-query</a>：True modularity in styling responsive component.</p>
+</li>
+<li><p><a href="https://github.com/JedWatson/classnames" target="_blank" rel="noopener">classnames</a>：A simple javascript utility for conditionally joining classNames together</p>
+</li>
+<li><p><a href="https://github.com/jljsj/enquire-js" target="_blank" rel="noopener">enquire-js</a>：避免服务端渲染报错</p>
+</li>
+<li><p><a href="https://github.com/pillarjs/path-to-regexp" target="_blank" rel="noopener">path-to-regexp</a>：Turn a path string such as <code>/user/:name</code> into a regular expression</p>
+</li>
+<li><p><a href="https://github.com/moment/moment" target="_blank" rel="noopener">moment</a>：Parse, validate, manipulate, and display dates in javascript.</p>
+</li>
+</ul>
+<p>umi 配置文件里的 <code>./</code> 相对于 <code>/src/pages</code> 目录</p>
+<p>组件路径中的 <code>@</code> 相当于 <code>/src</code></p>
+<hr>
+<p>国际化还没处理</p>
+<h2 id="umi报错"><a href="#umi报错" class="headerlink" title="umi报错"></a>umi报错</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> npm start</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;</span> ant-design-pro@2.1.0 start /Users/wangfukang/Desktop/project/frontend-proj/qinhetea-admin</span><br><span class="line"><span class="meta">&gt;</span> cross-env APP_TYPE=site umi dev</span><br><span class="line"></span><br><span class="line">&#123; Error: Cannot find module './lib/compressor'</span><br><span class="line">    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:587:15)</span><br><span class="line">    at Function.Module._load (internal/modules/cjs/loader.js:513:25)</span><br><span class="line">    at Module.require (internal/modules/cjs/loader.js:643:17)</span><br><span class="line">    at require (internal/modules/cjs/helpers.js:22:18)</span><br><span class="line">    at Object.&lt;anonymous&gt; (/Users/wangfukang/Desktop/project/frontend-proj/qinhetea-admin/node_modules/antd-theme-generator/node_modules/less-)</span><br><span class="line">    at Module._compile (internal/modules/cjs/loader.js:707:30)</span><br><span class="line">    at Module._compile (/Users/wangfukang/Desktop/project/frontend-proj/qinhetea-admin/node_modules/pirates/lib/index.js:83:24)</span><br><span class="line">    at Module._extensions..js (internal/modules/cjs/loader.js:718:10)</span><br><span class="line">    at Object.newLoader [as .js] (/Users/wangfukang/Desktop/project/frontend-proj/qinhetea-admin/node_modules/pirates/lib/index.js:88:7)</span><br><span class="line">    at Module.load (internal/modules/cjs/loader.js:605:32) code: 'MODULE_NOT_FOUND' &#125;</span><br><span class="line">/Users/wangfukang/Desktop/project/frontend-proj/qinhetea-admin/node_modules/umi-build-dev/lib/UserConfig.js:188</span><br><span class="line">      throw new Error(msg);</span><br><span class="line">      ^</span><br><span class="line"></span><br><span class="line">Error: 配置文件 "config/config.js" 解析出错，请检查语法。</span><br><span class="line"></span><br><span class="line">Error: Cannot find module './lib/compressor'</span><br><span class="line">    at onError (/Users/wangfukang/Desktop/project/frontend-proj/qinhetea-admin/node_modules/umi-build-dev/lib/UserConfig.js:188:13)</span><br><span class="line">    at requireFile (/Users/wangfukang/Desktop/project/frontend-proj/qinhetea-admin/node_modules/umi-build-dev/lib/UserConfig.js:99:12)</span><br><span class="line">    at UserConfig.getConfig (/Users/wangfukang/Desktop/project/frontend-proj/qinhetea-admin/node_modules/umi-build-dev/lib/UserConfig.js:191:7)</span><br><span class="line">    at Service.init (/Users/wangfukang/Desktop/project/frontend-proj/qinhetea-admin/node_modules/umi-build-dev/lib/Service.js:287:31)</span><br><span class="line">    at Service.run (/Users/wangfukang/Desktop/project/frontend-proj/qinhetea-admin/node_modules/umi-build-dev/lib/Service.js:320:10)</span><br><span class="line">    at Object.&lt;anonymous&gt; (/Users/wangfukang/Desktop/project/frontend-proj/qinhetea-admin/node_modules/umi/lib/scripts/realDev.js:28:47)</span><br><span class="line">    at Module._compile (internal/modules/cjs/loader.js:707:30)</span><br><span class="line">    at Object.Module._extensions..js (internal/modules/cjs/loader.js:718:10)</span><br><span class="line">    at Module.load (internal/modules/cjs/loader.js:605:32)</span><br><span class="line">    at tryModuleLoad (internal/modules/cjs/loader.js:544:12)</span><br><span class="line">npm ERR! code ELIFECYCLE</span><br><span class="line">npm ERR! errno 1</span><br><span class="line">npm ERR! ant-design-pro@2.1.0 start: `cross-env APP_TYPE=site umi dev`</span><br><span class="line">npm ERR! Exit status 1</span><br><span class="line">npm ERR!</span><br><span class="line">npm ERR! Failed at the ant-design-pro@2.1.0 start script.</span><br><span class="line">npm ERR! This is probably not a problem with npm. There is likely additional logging output above.</span><br><span class="line"></span><br><span class="line">npm ERR! A complete log of this run can be found in:</span><br><span class="line">npm ERR!     /Users/wangfukang/.npm/_logs/2018-11-09T03_44_21_728Z-debug.log</span><br></pre></td></tr></table></figure>
+<h2 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h2><h3 id="Table-中数据的-key-未指定"><a href="#Table-中数据的-key-未指定" class="headerlink" title="Table 中数据的 key 未指定"></a>Table 中数据的 key 未指定</h3><p><img src="/images/react/react-warning1.png" alt="key 引起的警告"></p>
+<ul>
+<li><a href="https://ant.design/components/table-cn/#注意" target="_blank" rel="noopener">官方文档说明</a></li>
+</ul>
+<h3 id="FormItem-中出现多个-getFieldDecorator"><a href="#FormItem-中出现多个-getFieldDecorator" class="headerlink" title="FormItem 中出现多个 getFieldDecorator"></a>FormItem 中出现多个 getFieldDecorator</h3><ul>
+<li><p><a href="https://github.com/ant-design/ant-design/issues/5052" target="_blank" rel="noopener">issue</a></p>
+</li>
+<li><p><a href="https://ant.design/components/form-cn/#components-form-demo-validate-static" target="_blank" rel="noopener">FormItem 互相嵌套</a></p>
+</li>
+</ul>
+<h3 id="Form-自定义-validator-校验时，callback-必须被调用"><a href="#Form-自定义-validator-校验时，callback-必须被调用" class="headerlink" title="Form 自定义 validator 校验时，callback 必须被调用"></a>Form 自定义 validator 校验时，callback 必须被调用</h3><ul>
+<li><a href="https://github.com/ant-design/ant-design/issues/5155" target="_blank" rel="noopener">issue</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>Author: </span>
+      <a href="http://wfk007.github.io">王富康</a>
+    </p>
+    <p class="copyright-item">
+      <span>Link: </span>
+      <a href="http://wfk007.github.io/2018/11/01/ant-design-pro-learning/">http://wfk007.github.io/2018/11/01/ant-design-pro-learning/</a>
+    </p>
+    <p class="copyright-item">
+      <span>License: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+  <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden />
+    <label class="reward-button" for="reward">Reward</label>
+    <div class="qr-code">
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/wechat.png" title="wechat">
+        </label>
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/alipay.png" title="alipay">
+        </label>
+      
+    </div>
+  </div>
+
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/11/10/I-am-jiangxiaobai/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">我是江小白</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/10/31/git-encounter-probs/">
+        <span class="next-text nav-default">git 遇到的问题</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://leetcode.com/wfk007" class="iconfont icon-LeetCode" title="LeetCode"></a>
+        
+      
+    
+      
+        
+          <a href="https://github.com/wfk007" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">王富康</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://wfk007.github.io/2018/11/01/ant-design-pro-learning/';
+        this.page.identifier = '2018/11/01/ant-design-pro-learning/';
+        this.page.title = 'ant-design-pro';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//anduins-blog.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+  
+
+  
+
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>
