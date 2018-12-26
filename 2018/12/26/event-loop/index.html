@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="js 的调用栈、事件循环、异步 API 的调用顺序"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Anduin's Blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://wfk007.github.io/2018/12/26/event-loop/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> event-loop - Anduin's Blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Anduin's Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            Categories
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            About
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Anduin's Blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              Home
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              Archives
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              Categories
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              About
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          event-loop
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-12-26
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/JavaScript/">JavaScript</a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Regular-Event-Loop"><span class="toc-text">Regular Event Loop</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Starved-Event-Loop"><span class="toc-text">Starved Event Loop</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Event-Loop-Explained"><span class="toc-text">Event Loop Explained</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Code-Snippet-1-Intrigue-the-mind"><span class="toc-text">Code Snippet 1 : Intrigue the mind</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Code-Snippet-2-Deeper-Understanding"><span class="toc-text">Code Snippet 2 : Deeper Understanding</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <p>引用自：</p>
+<ul>
+<li><p><a href="https://gist.github.com/jesstelford/9a35d20a2aa044df8bf241e00d7bc2d0" target="_blank" rel="noopener">What is the JS Event Loop and Call Stack? — Jess Telford</a></p>
+</li>
+<li><p><a href="https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4" target="_blank" rel="noopener">JavaScript Event Loop Explained — Anoop Raveendran</a></p>
+</li>
+</ul>
+<h1 id="Regular-Event-Loop"><a href="#Regular-Event-Loop" class="headerlink" title="Regular Event Loop"></a>Regular Event Loop</h1><p>This shows the execution order given JavaScript’s Call Stack, Event Loop, and any asynchronous APIs provided in the JS execution environment (in this example; Web APIs in a Browser environment)</p>
+<hr>
+<p>Given the code</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123; </span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hi'</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+<p>The Call Stack, Event Loop, and Web APIs have the following relationship</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">      [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">--------------------|-------------------|--------------| |---------------|</span><br><span class="line">setTimeout(() =&gt; &#123;  |                   |              | |               |</span><br><span class="line">  console.log(&apos;hi&apos;) |                   |              | |               |</span><br><span class="line">&#125;, 1000)            |                   |              | |               |</span><br><span class="line">                    |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p>To start, everything is empty</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">      [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">--------------------|-------------------|--------------| |---------------|</span><br><span class="line">setTimeout(() =&gt; &#123;  | &lt;global&gt;          |              | |               |</span><br><span class="line">  console.log(&apos;hi&apos;) |                   |              | |               |</span><br><span class="line">&#125;, 1000)            |                   |              | |               |</span><br><span class="line">                    |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p>It starts executing the code, and pushes that fact onto the Call Stack (here named <code>&lt;global&gt;</code>)</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">&gt; setTimeout(() =&gt; &#123;  | &lt;global&gt;          |              | |               |</span><br><span class="line">    console.log(&apos;hi&apos;) | setTimeout        |              | |               |</span><br><span class="line">  &#125;, 1000)            |                   |              | |               |</span><br><span class="line">                      |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p>Then the first line is executed. This pushes the function execution as the second item onto the call stack. </p>
+<p>Note that the Call Stack is a <em>stack</em>; </p>
+<p>The last item pushed on is the first item popped off. Aka: Last In, First Out. (think; a stack of dishes)</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">&gt; setTimeout(() =&gt; &#123;  | &lt;global&gt;          |              | | timeout, 1000 |</span><br><span class="line">    console.log(&apos;hi&apos;) | setTimeout        |              | |               |</span><br><span class="line">  &#125;, 1000)            |                   |              | |               |</span><br><span class="line">                      |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p>Executing <code>setTimeout</code> actually calls out to code that is <em>not</em> part of JS. It’s part of a <em>Web API</em> which the browser provides for us. There are a different set of APIs like this available in node.</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">      [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">--------------------|-------------------|--------------| |---------------|</span><br><span class="line">setTimeout(() =&gt; &#123;  | &lt;global&gt;          |              | | timeout, 1000 |</span><br><span class="line">  console.log(&apos;hi&apos;) |                   |              | |               |</span><br><span class="line">&#125;, 1000)            |                   |              | |               |</span><br><span class="line">                    |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p><code>setTimeout</code> is then finished executing; it has offloaded its work to the Web API which will wait for the requested amount of time (1000ms).</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">      [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">--------------------|-------------------|--------------| |---------------|</span><br><span class="line">setTimeout(() =&gt; &#123;  |                   |              | | timeout, 1000 |</span><br><span class="line">  console.log(&apos;hi&apos;) |                   |              | |               |</span><br><span class="line">&#125;, 1000)            |                   |              | |               |</span><br><span class="line">                    |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p>As there are no more lines of JS to execute, the Call Stack is now empty.</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">      [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">--------------------|-------------------|--------------| |---------------|</span><br><span class="line">setTimeout(() =&gt; &#123;  |                   | function   &lt;-----timeout, 1000 |</span><br><span class="line">  console.log(&apos;hi&apos;) |                   |              | |               |</span><br><span class="line">&#125;, 1000)            |                   |              | |               |</span><br><span class="line">                    |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p>Once the timeout has expired, the Web API lets JS know by adding code to the Event Loop. It doesn’t push onto the Call Stack directly as that could intefere with already executing code, and you’d end up in weird situations. The Event Loop is a <em>Queue</em>. The first item pushed on is the first item popped off. Aka: First In, First Out. (think; a queue for a movie)</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">      [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">--------------------|-------------------|--------------| |---------------|</span><br><span class="line">setTimeout(() =&gt; &#123;  | function        &lt;---function     | |               |</span><br><span class="line">  console.log(&apos;hi&apos;) |                   |              | |               |</span><br><span class="line">&#125;, 1000)            |                   |              | |               |</span><br><span class="line">                    |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p>Whenever the Call Stack is empty, the JS execution environment occasionally checks to see if anything is Queued in the Event Loop. If it is, the first item is moved to the Call Stack for execution.</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">  setTimeout(() =&gt; &#123;  | function          |              | |               |</span><br><span class="line">&gt;   console.log(&apos;hi&apos;) | console.log       |              | |               |</span><br><span class="line">  &#125;, 1000)            |                   |              | |               |</span><br><span class="line">                      |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p>Executing the function results in <code>console.log</code> being called, also pushed onto the Call Stack.</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">  setTimeout(() =&gt; &#123;  | function          |              | |               |</span><br><span class="line">    console.log(&apos;hi&apos;) |                   |              | |               |</span><br><span class="line">  &#125;, 1000)            |                   |              | |               |</span><br><span class="line">                      |                   |              | |               |</span><br><span class="line">&gt; hi</span><br></pre></td></tr></table></figure>
+<p>Once finished executing, <code>hi</code> is printed, and <code>console.log</code> is removed from the Call Stack.</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">  setTimeout(() =&gt; &#123;  |                   |              | |               |</span><br><span class="line">    console.log(&apos;hi&apos;) |                   |              | |               |</span><br><span class="line">  &#125;, 1000)            |                   |              | |               |</span><br><span class="line">                      |                   |              | |               |</span><br><span class="line">&gt; hi</span><br></pre></td></tr></table></figure>
+<p>Finally, the function has no other commands to execute, so it too is taken off the Call Stack.</p>
+<p>Our program has now finished execution.</p>
+<p>End.</p>
+<h1 id="Starved-Event-Loop"><a href="#Starved-Event-Loop" class="headerlink" title="Starved Event Loop"></a>Starved Event Loop</h1><p>Below is an example of how code running in the current Call Stack can prevent code on the Event Loop from being executed. aka; the Event Loop is <em>starved</em>.</p>
+<hr>
+<p>Given the code</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123; </span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'bye'</span>)</span><br><span class="line">&#125;, <span class="number">2</span>)           </span><br><span class="line">someSlowFn()</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'hi'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">      [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">--------------------|-------------------|--------------| |---------------|</span><br><span class="line">setTimeout(() =&gt; &#123;  |                   |              | |               |</span><br><span class="line">  console.log(&apos;bye&apos;)|                   |              | |               |</span><br><span class="line">&#125;, 2)               |                   |              | |               |</span><br><span class="line">someSlowFn()        |                   |              | |               |</span><br><span class="line">console.log(&apos;hi&apos;)   |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p>To start, everything is empty</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">      [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">--------------------|-------------------|--------------| |---------------|</span><br><span class="line">setTimeout(() =&gt; &#123;  | &lt;global&gt;          |              | |               |</span><br><span class="line">  console.log(&apos;bye&apos;)|                   |              | |               |</span><br><span class="line">&#125;, 2)               |                   |              | |               |</span><br><span class="line">someSlowFn()        |                   |              | |               |</span><br><span class="line">console.log(&apos;hi&apos;)   |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p>It starts executing the code, and pushes that fact onto the Call Stack (here named <code>&lt;global&gt;</code>)</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">&gt; setTimeout(() =&gt; &#123;  | &lt;global&gt;          |              | |               |</span><br><span class="line">    console.log(&apos;bye&apos;)| setTimeout        |              | |               |</span><br><span class="line">  &#125;, 2)               |                   |              | |               |</span><br><span class="line">  someSlowFn()        |                   |              | |               |</span><br><span class="line">  console.log(&apos;hi&apos;)   |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p><code>setTimeout</code> is pushed onto the Call Stack</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">&gt; setTimeout(() =&gt; &#123;  | &lt;global&gt;          |              | | timeout, 2    |</span><br><span class="line">    console.log(&apos;bye&apos;)| setTimeout        |              | |               |</span><br><span class="line">  &#125;, 2)               |                   |              | |               |</span><br><span class="line">  someSlowFn()        |                   |              | |               |</span><br><span class="line">  console.log(&apos;hi&apos;)   |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p><code>setTimeout</code> triggers the timeout Web API</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">      [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">--------------------|-------------------|--------------| |---------------|</span><br><span class="line">setTimeout(() =&gt; &#123;  | &lt;global&gt;          |              | | timeout, 2    |</span><br><span class="line">  console.log(&apos;bye&apos;)|                   |              | |               |</span><br><span class="line">&#125;, 2)               |                   |              | |               |</span><br><span class="line">someSlowFn()        |                   |              | |               |</span><br><span class="line">console.log(&apos;hi&apos;)   |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p><code>setTimeout</code> is then finished executing, while the Web API waits for the requested amount of time (2ms).</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">  setTimeout(() =&gt; &#123;  | &lt;global&gt;          |              | | timeout, 2    |</span><br><span class="line">    console.log(&apos;bye&apos;)| someSlowFn        |              | |               |</span><br><span class="line">  &#125;, 2)               |                   |              | |               |</span><br><span class="line">&gt; someSlowFn()        |                   |              | |               |</span><br><span class="line">  console.log(&apos;hi&apos;)   |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p><code>someSlowFn</code> starts executing. Let’s pretend this takes around 300ms to complete. For that 300ms, JS can’t remove it from the Call Stack</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">  setTimeout(() =&gt; &#123;  | &lt;global&gt;          | function   &lt;-----timeout, 2    |</span><br><span class="line">    console.log(&apos;bye&apos;)| someSlowFn        |              | |               |</span><br><span class="line">  &#125;, 2)               |                   |              | |               |</span><br><span class="line">&gt; someSlowFn()        |                   |              | |               |</span><br><span class="line">  console.log(&apos;hi&apos;)   |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p>Meanwhile, the timeout has expired, so the Web API lets JS know by adding code to the Event Loop. <code>someSlowFn</code> is still executing on the Call Stack, and cannot be interrupted, so the code to be executed by the timeout waits on the Event Loop for its turn.</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">  setTimeout(() =&gt; &#123;  | &lt;global&gt;          | function     | |               |</span><br><span class="line">    console.log(&apos;bye&apos;)| someSlowFn        |              | |               |</span><br><span class="line">  &#125;, 2)               |                   |              | |               |</span><br><span class="line">&gt; someSlowFn()        |                   |              | |               |</span><br><span class="line">  console.log(&apos;hi&apos;)   |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p>Still waiting for <code>someSlowFn</code> to finish…</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">  setTimeout(() =&gt; &#123;  | &lt;global&gt;          | function     | |               |</span><br><span class="line">    console.log(&apos;bye&apos;)|                   |              | |               |</span><br><span class="line">  &#125;, 2)               |                   |              | |               |</span><br><span class="line">&gt; someSlowFn()        |                   |              | |               |</span><br><span class="line">  console.log(&apos;hi&apos;)   |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p><code>someSlowFn</code> finally finished!</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">  setTimeout(() =&gt; &#123;  | &lt;global&gt;          | function     | |               |</span><br><span class="line">    console.log(&apos;bye&apos;)| console.log       |              | |               |</span><br><span class="line">  &#125;, 2)               |                   |              | |               |</span><br><span class="line">  someSlowFn()        |                   |              | |               |</span><br><span class="line">&gt; console.log(&apos;hi&apos;)   |                   |              | |               |</span><br></pre></td></tr></table></figure>
+<p>The next line is executed, pushing <code>console.log</code> onto the Call Stack</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">  setTimeout(() =&gt; &#123;  | &lt;global&gt;          | function     | |               |</span><br><span class="line">    console.log(&apos;bye&apos;)|                   |              | |               |</span><br><span class="line">  &#125;, 2)               |                   |              | |               |</span><br><span class="line">  someSlowFn()        |                   |              | |               |</span><br><span class="line">&gt; console.log(&apos;hi&apos;)   |                   |              | |               |</span><br><span class="line"></span><br><span class="line">&gt; hi</span><br></pre></td></tr></table></figure>
+<p>We see <code>hi</code> output on the console thanks to <code>console.log</code></p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">  setTimeout(() =&gt; &#123;  |                   | function     | |               |</span><br><span class="line">    console.log(&apos;bye&apos;)|                   |              | |               |</span><br><span class="line">  &#125;, 2)               |                   |              | |               |</span><br><span class="line">  someSlowFn()        |                   |              | |               |</span><br><span class="line">  console.log(&apos;hi&apos;)   |                   |              | |               |</span><br><span class="line"></span><br><span class="line">&gt; hi</span><br></pre></td></tr></table></figure>
+<p>Nothing left to execute, so the special <code>&lt;global&gt;</code> is popped off the Call Stack.</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">  setTimeout(() =&gt; &#123;  | function        &lt;---function     | |               |</span><br><span class="line">    console.log(&apos;bye&apos;)|                   |              | |               |</span><br><span class="line">  &#125;, 2)               |                   |              | |               |</span><br><span class="line">  someSlowFn()        |                   |              | |               |</span><br><span class="line">  console.log(&apos;hi&apos;)   |                   |              | |               |</span><br><span class="line"></span><br><span class="line">&gt; hi</span><br></pre></td></tr></table></figure>
+<p>This frees up the JS execution environment to check the Event Loop for any code which needs to be executed.</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">  setTimeout(() =&gt; &#123;  | function          |              | |               |</span><br><span class="line">&gt;   console.log(&apos;bye&apos;)| console.log       |              | |               |</span><br><span class="line">  &#125;, 2)               |                   |              | |               |</span><br><span class="line">  someSlowFn()        |                   |              | |               |</span><br><span class="line">  console.log(&apos;hi&apos;)   |                   |              | |               |</span><br><span class="line"></span><br><span class="line">&gt; hi</span><br></pre></td></tr></table></figure>
+<p>Executing the function results in <code>console.log</code> being called, also pushed onto the Call Stack.</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">  setTimeout(() =&gt; &#123;  | function          |              | |               |</span><br><span class="line">    console.log(&apos;bye&apos;)|                   |              | |               |</span><br><span class="line">  &#125;, 2)               |                   |              | |               |</span><br><span class="line">  someSlowFn()        |                   |              | |               |</span><br><span class="line">  console.log(&apos;hi&apos;)   |                   |              | |               |</span><br><span class="line"></span><br><span class="line">&gt; hi</span><br><span class="line">&gt; bye</span><br></pre></td></tr></table></figure>
+<p>Once finished executing, <code>bye</code> is printed, and <code>console.log</code> is removed from the Call Stack.</p>
+<p>Notice that by this point, it is at least 300ms <em>after</em> the code originally requested the <code>setTimeout</code>. Meaning even though we asked for it to be executed after only 2ms, we still had to wait for the Call Stack to empty before the <code>setTimeout</code> code on the Event Loop could be executed</p>
+<p><em>Note: Even if we didn’t have <code>someSlowFn</code>, <code>setTimeout</code> is clamped to 4ms asthe mimimum delay allowed in some cases</em></p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">        [code]        |   [call stack]    | [Event Loop] | |   [Web APIs]  |</span><br><span class="line">  --------------------|-------------------|--------------| |---------------|</span><br><span class="line">  setTimeout(() =&gt; &#123;  |                   |              | |               |</span><br><span class="line">    console.log(&apos;bye&apos;)|                   |              | |               |</span><br><span class="line">  &#125;, 2)               |                   |              | |               |</span><br><span class="line">  someSlowFn()        |                   |              | |               |</span><br><span class="line">  console.log(&apos;hi&apos;)   |                   |              | |               |</span><br><span class="line"></span><br><span class="line">&gt; hi</span><br><span class="line">&gt; bye</span><br></pre></td></tr></table></figure>
+<p>Finally, there are no other commands to execute, so it too is taken off the Call Stack.</p>
+<p>Our program has now finished execution.</p>
+<p>End.</p>
+<p><em>Note: It’s also possible to <a href="https://gist.github.com/jesstelford/bbb30b983bddaa6e5fef2eb867d37678" target="_blank" rel="noopener">starve the event loop with Promises</a> via the “Microtask queue”</em></p>
+<h1 id="Event-Loop-Explained"><a href="#Event-Loop-Explained" class="headerlink" title="Event Loop Explained"></a>Event Loop Explained</h1><p><img src="/images/event-loop/basic.jpeg" alt="basic"></p>
+<h2 id="Code-Snippet-1-Intrigue-the-mind"><a href="#Code-Snippet-1-Intrigue-the-mind" class="headerlink" title="Code Snippet 1 : Intrigue the mind"></a>Code Snippet 1 : Intrigue the mind</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'A'</span>);</span><br><span class="line">  setTimeout(</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">display</span>(<span class="params"></span>)</span>&#123; <span class="built_in">console</span>.log(<span class="string">'B'</span>); &#125;</span><br><span class="line">  ,<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'C'</span>);</span><br><span class="line">&#125;</span><br><span class="line">main();</span><br><span class="line"><span class="comment">//	Output</span></span><br><span class="line"><span class="comment">//	A</span></span><br><span class="line"><span class="comment">//	C</span></span><br><span class="line"><span class="comment">//  B</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/event-loop/demo1.jpeg" alt="demo1"></p>
+<ol>
+<li>The call to the main function is first pushed into the stack (as a frame). Then the browser pushes the first statement in the main function into the stack which is console.log(‘A’). This statement is executed and upon completion that frame is popped out. Alphabet A is displayed in the console.</li>
+<li>The next statement (setTimeout() with callback exec() and 0ms wait time) is pushed into the call stack and execution starts. setTimeout function uses a Browser API to delay a callback to the provided function. The frame (with setTimeout) is then popped out once the handover to browser is complete (for the timer).</li>
+<li>console.log(‘C’) is pushed to the stack while the timer runs in the browser for the callback to the exec() function. In this particular case, as the delay provided was 0ms, the callback will be added to the message queue as soon as the browser receives it (ideally).</li>
+<li>After the execution of the last statement in the main function, the main() frame is popped out of the call stack, thereby making it empty. For the browser to push any message from the queue to the call stack, the call stack has to be empty first. That is why even though the delay provided in the setTimeout() was 0 seconds, the callback to exec() has to wait till the execution of all the frames in the call stack is complete.</li>
+<li>Now the callback exec() is pushed into the call stack and executed. The alphabet C is display on the console. This is the event loop of javascript.</li>
+</ol>
+<blockquote>
+<p>So the delay parameter in setTimeout(function, delayTime) does not stand for the precise time delay after which the function is executed. It stands for the minimum wait time after which at some point in time the function will be executed.</p>
+</blockquote>
+<h2 id="Code-Snippet-2-Deeper-Understanding"><a href="#Code-Snippet-2-Deeper-Understanding" class="headerlink" title="Code Snippet 2 : Deeper Understanding"></a>Code Snippet 2 : Deeper Understanding</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'A'</span>);</span><br><span class="line">  setTimeout(</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">exec</span>(<span class="params"></span>)</span>&#123; <span class="built_in">console</span>.log(<span class="string">'B'</span>); &#125;</span><br><span class="line">  , <span class="number">0</span>);</span><br><span class="line">  runWhileLoopForNSeconds(<span class="number">3</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'C'</span>);</span><br><span class="line">&#125;</span><br><span class="line">main();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">runWhileLoopForNSeconds</span>(<span class="params">sec</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> start = <span class="built_in">Date</span>.now(), now = start;</span><br><span class="line">  <span class="keyword">while</span> (now - start &lt; (sec*<span class="number">1000</span>)) &#123;</span><br><span class="line">    now = <span class="built_in">Date</span>.now();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Output</span></span><br><span class="line"><span class="comment">// A</span></span><br><span class="line"><span class="comment">// C</span></span><br><span class="line"><span class="comment">// B</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/event-loop/demo2.jpeg" alt="demo2"></p>
+<ul>
+<li>The function runWhileLoopForNSeconds() does exactly what its name stands for. It constantly checks if the elapsed time from the time it was invoked is equal to the number of seconds provided as the argument to the function. The main point to remember is that while loop (like many others) is a blocking statement meaning its execution happens on the call stack and does not use the browser APIs. So it blocks all succeeding statements until it finishes execution.</li>
+<li>So in the above code, even though setTimeout has a delay of 0s and the while loop runs for 3s, the exec() call back is stuck in the message queue. The while loop keeps on running on the call stack (single thread) until 3s has elapsed. And after the call stack becomes empty the callback exec() is moved to the call stack and executed.</li>
+<li>So the delay argument in setTimeout() does not guarantee the start of execution after timer finishes the delay. It serves as a minimum time for the delay part.</li>
+</ul>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>Author: </span>
+      <a href="http://wfk007.github.io">王富康</a>
+    </p>
+    <p class="copyright-item">
+      <span>Link: </span>
+      <a href="http://wfk007.github.io/2018/12/26/event-loop/">http://wfk007.github.io/2018/12/26/event-loop/</a>
+    </p>
+    <p class="copyright-item">
+      <span>License: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+  <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden />
+    <label class="reward-button" for="reward">Reward</label>
+    <div class="qr-code">
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/wechat.png" title="wechat">
+        </label>
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/alipay.png" title="alipay">
+        </label>
+      
+    </div>
+  </div>
+
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2018/12/25/ant-design/">
+        <span class="next-text nav-default">ant-design 圣诞彩蛋事件</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://leetcode.com/wfk007" class="iconfont icon-LeetCode" title="LeetCode"></a>
+        
+      
+    
+      
+        
+          <a href="https://github.com/wfk007" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">王富康</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://wfk007.github.io/2018/12/26/event-loop/';
+        this.page.identifier = '2018/12/26/event-loop/';
+        this.page.title = 'event-loop';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//anduins-blog.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+  
+
+  
+
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>
