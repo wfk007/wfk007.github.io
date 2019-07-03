@@ -219,7 +219,7 @@
   <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">Contents</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#use-git-clone-depth-lt-number-gt-to-clone-your-local-version（18-10-31-encountered）"><span class="toc-text">use git clone --depth &lt;number&gt; to clone your local version（18-10-31 encountered）</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#use-git-clone-depth-lt-number-gt-to-clone-your-local-version（18-10-31-encountered）"><span class="toc-text">use git clone --depth &lt;number&gt; to clone your local version（18-10-31 encountered）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git"><span class="toc-text">Git</span></a></li></ol>
     </div>
   </div>
 
@@ -228,7 +228,7 @@
       
         <h2 id="use-git-clone-depth-lt-number-gt-to-clone-your-local-version（18-10-31-encountered）"><a href="#use-git-clone-depth-lt-number-gt-to-clone-your-local-version（18-10-31-encountered）" class="headerlink" title="use git clone --depth &lt;number&gt; to clone your local version（18-10-31 encountered）"></a>use <code>git clone --depth &lt;number&gt;</code> to clone your local version（18-10-31 encountered）</h2><p>问题背景：</p>
 <blockquote>
-<p>同学在 GitHub 仓库初始化了一个前端空项目，有三个文件：README.MD、.gitignore、LICENSE。</p>
+<p>某同学在 GitHub 仓库初始化了一个前端空项目，有三个文件：README.MD、.gitignore、LICENSE。</p>
 <p>实际准备开发时，使用 <a href="https://github.com/ant-design/ant-design-pro" target="_blank" rel="noopener">ant-design-pro</a> 作为脚手架， 脚手架中包括这三个文件，但和初始化项目中的内容不同，最终项目的 README 和 LICENSE 使用初始化项目中的，.gitignore 使用 ant-design-pro 里的</p>
 </blockquote>
 <p>使用下面命令，从 GitHub 仓库中直接安装最新的脚手架代码</p>
@@ -249,6 +249,12 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git remote add old https://github.com/ant-design/ant-design-pro.git</span><br><span class="line"><span class="meta">$</span> git fetch --unshallow old</span><br></pre></td></tr></table></figure>
 <p>再执行 <code>git push origin master</code> 成功，成功后记得使用 <code>git remote rm old</code>，删除远程 old 仓库</p>
 <p>The end.</p>
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin develop</span><br><span class="line">将本地 develop 分支推送到远程 develop 分支并 pull request，-u 参数指定一个默认主机</span><br><span class="line"></span><br><span class="line">git checkout -b develop origin/develop</span><br><span class="line">在远程 develop 分支的基础上，在本地创建一个 develop 分支</span><br></pre></td></tr></table></figure>
+<p>合并分支之前一定要确保被合并分支是最新的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git pull origin develop</span><br><span class="line">git checkout develop</span><br><span class="line">git merge some-feature</span><br><span class="line">git push</span><br><span class="line">git branch -d some-feature</span><br></pre></td></tr></table></figure>
+<p>与主干同步？</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git fetch origin</span><br><span class="line"><span class="meta">$</span> git rebase origin/master</span><br></pre></td></tr></table></figure>
+<p>合并提交：如果你希望得到线性的历史，你可以在执行 merge 之前将功能 rebase 到 <code>master</code> 分支的顶端，产生一个快速向前的合并</p>
 
       
     </div>
