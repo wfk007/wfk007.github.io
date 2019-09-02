@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <head><meta name="generator" content="Hexo 3.9.0">
     
-<meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
-<meta name="theme-color" content="#f8f5ec" />
+<meta name="theme-color" content="#f8f5ec">
 <meta name="msapplication-navbutton-color" content="#f8f5ec">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
 
-  <meta name="description" content="ESLint 配置踩坑"/>
+  <meta name="description" content="ESLint 配置踩坑">
 
 
 
@@ -36,18 +36,18 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0">
 
 
 
-<link rel="canonical" href="http://wfk007.github.io/2019/07/04/eslintConfig/"/>
+<link rel="canonical" href="http://wfk007.github.io/2019/07/04/eslintConfig/">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0">
 
 
 
-  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
 
 
 
@@ -216,6 +216,13 @@
 
     
     
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#使用-typescript"><span class="toc-text">使用 typescript</span></a></li></ol>
+    </div>
+  </div>
+
 
     <div class="post-content">
       
@@ -225,7 +232,7 @@
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"extends"</span>: [</span><br><span class="line">   <span class="string">"eslint:recommended"</span>,</span><br><span class="line">   <span class="string">"plugin:react/recommended"</span></span><br><span class="line"> ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>或者进行如下配置：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"extends"</span>: [<span class="string">"eslint:recommended"</span>],</span><br><span class="line">  <span class="attr">"plugins"</span>: [<span class="string">"react"</span>],</span><br><span class="line">  <span class="attr">"parserOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"ecmaFeatures"</span>: &#123;</span><br><span class="line">      <span class="attr">"jsx"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"rules"</span>: &#123;</span><br><span class="line">    <span class="attr">"react/jsx-uses-react"</span>: <span class="string">"error"</span>,</span><br><span class="line">    <span class="attr">"react/jsx-uses-vars"</span>: <span class="string">"error"</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>完成的配置文件如下：</p>
+<p>完全的配置文件如下：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"env"</span>: &#123;</span><br><span class="line">    <span class="attr">"browser"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"es6"</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"extends"</span>: [<span class="string">"eslint:recommended"</span>, <span class="string">"plugin:react/recommended"</span>],</span><br><span class="line">  <span class="attr">"globals"</span>: &#123;</span><br><span class="line">    <span class="attr">"Atomics"</span>: <span class="string">"readonly"</span>,</span><br><span class="line">    <span class="attr">"SharedArrayBuffer"</span>: <span class="string">"readonly"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"parserOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"ecmaVersion"</span>: <span class="number">2018</span>,</span><br><span class="line">    <span class="attr">"sourceType"</span>: <span class="string">"module"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"rules"</span>: &#123;</span><br><span class="line">    <span class="attr">"semi"</span>: [<span class="string">"error"</span>, <span class="string">"always"</span>],</span><br><span class="line">    <span class="attr">"quotes"</span>: [<span class="string">"error"</span>, <span class="string">"double"</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>接下来是对各字段的解释说明：</p>
 <ul>
@@ -246,6 +253,36 @@
 </li>
 </ul>
 <p>如果不想使用 ESLint 默认的解析器 <a href="https://github.com/eslint/espree" target="_blank" rel="noopener">Espree</a>，也可以在配置中指定解析器，最常用的如 <a href="https://github.com/babel/babel-eslint" target="_blank" rel="noopener">babel-eslint</a>，</p>
+<h1 id="使用-typescript"><a href="#使用-typescript" class="headerlink" title="使用 typescript"></a>使用 typescript</h1><ol>
+<li><p>安装 eslint、typescript、@typescript-eslint/parser、eslint-plugin-typescript</p>
+<blockquote>
+<p>npm install eslint typescript @typescript-eslint/parser eslint-plugin-typescript –save-dev</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li>由于 ESLint 默认使用 <a href="https://github.com/eslint/espree" target="_blank" rel="noopener">Espree</a> 进行语法解析，无法识别 TypeScript 的一些语法，故我们需要安装 <code>@typescript-eslint/parser</code>，替换掉默认的解析器，<strong>注：<code>typescript-eslint-parser</code> 已不再维护，安装 npm 包时别装错了</strong></li>
+<li>由于 <code>typescript-eslint-parser</code> 对一部分 ESLint 规则支持性不好，故我们需要安装 <code>eslint-plugin-typescript</code>，弥补一些支持性不好的规则</li>
+</ul>
+<ol start="2">
+<li><p>创建 eslint 配置文件 .eslintrc，上文也提到过，ESLint 支持使用 JavaScript、JSON 和 YAML 为目录指定配置信息</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"parser"</span>: <span class="string">"@typescript-eslint/parser"</span>,</span><br><span class="line">  <span class="attr">"plugins"</span>: [<span class="string">"typescript"</span>],</span><br><span class="line">  <span class="attr">"extends"</span>: [<span class="string">"eslint:recommended"</span>],</span><br><span class="line">  <span class="attr">"rules"</span>: &#123;</span><br><span class="line">    "semi": ["error", "always"], // 每条语句后必须加分号</span><br><span class="line">    "quotes": ["error", "double"], // 必须使用双引号</span><br><span class="line">    // @fixable 必须使用 === 或 !==，禁止使用 == 或 !=，与 null 比较时除外</span><br><span class="line">    "eqeqeq": [</span><br><span class="line">      "error",</span><br><span class="line">      "always",</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"null"</span>: <span class="string">"ignore"</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    // 类和接口的命名必须遵守帕斯卡命名法，比如 PersianCat</span><br><span class="line">    "typescript/class-name-casing": "error"</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试：创建不符合规则的代码，运行命令查看效果</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> person &#123;</span><br><span class="line">    name: <span class="built_in">string</span>;</span><br><span class="line">    age: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> tom: person = &#123;</span><br><span class="line">    name: <span class="string">'Tom'</span>,</span><br><span class="line">    age: <span class="number">25</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (tom.age == <span class="number">25</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(tom.name + <span class="string">'is 25 years old.'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/eslint/eslint-1.jpeg" alt="eslint-1"></p>
+<p>或者在 package.json 中添加一个 script，来简化这个步骤：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">    "eslint": "eslint index.ts"</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+<p>这时只需执行  <code>npm run eslint</code>  即可。</p>
+</li>
+<li><p>在 VScode 中继承 Eslint 的检查：下载安装 ESLint 插件</p>
+<p>VSCode 中的 ESLint 插件默认是不会检查 <code>.ts</code> 后缀的，需要在「文件 =&gt; 首选项 =&gt; 设置」中，添加以下配置：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"eslint.validate"</span>: [<span class="string">"javascript"</span>, <span class="string">"javascriptreact"</span>, <span class="string">"typescript"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这时再打开一个 <code>.ts</code> 文件，将鼠标移到红色提示处，即可看到报错信息</p>
+</li>
+<li><p>如果需要支持对 jsx 和 tsx 文件的支持，则还需安装 eslint-plugin-react 插件，并在 VSCode 插件中添加对 typescriptreact 的检查。</p>
+</li>
+</ol>
 
       
     </div>
@@ -275,7 +312,7 @@
       
       
   <div class="post-reward">
-    <input type="checkbox" name="reward" id="reward" hidden />
+    <input type="checkbox" name="reward" id="reward" hidden>
     <label class="reward-button" for="reward">Reward</label>
     <div class="qr-code">
       
@@ -300,6 +337,12 @@
         
         
   <nav class="post-nav">
+    
+      <a class="prev" href="/2019/09/02/compiler/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">一个简单的编译器</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
     
     
       <a class="next" href="/2019/07/03/middleware/">
