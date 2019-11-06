@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="中国大陆手机号的测试用例">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Anduin's Blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0">
+
+
+
+<link rel="canonical" href="http://wfk007.github.io/2019/11/06/testCaseForPhoneNumber/">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> 中国大陆手机号的测试用例 - Anduin's Blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Anduin's Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            Categories
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            About
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Anduin's Blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              Home
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              Archives
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              Categories
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              About
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          中国大陆手机号的测试用例
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-11-06
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/JavaScript/">JavaScript</a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        <p>判断是否是合法的中国大陆手机号。</p>
+<p>正则 GitHub 来源：<a href="https://github.com/VincentSit/ChinaMobilePhoneNumberRegex" target="_blank" rel="noopener">https://github.com/VincentSit/ChinaMobilePhoneNumberRegex</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isValidChinaMobilePhoneNumber = <span class="function"><span class="params">tel</span> =&gt;</span></span><br><span class="line">  /^(?:\+?<span class="number">86</span>)?<span class="number">1</span>(?:<span class="number">3</span>\d&#123;<span class="number">3</span>&#125;|<span class="number">5</span>[^<span class="number">4</span>\D]\d&#123;<span class="number">2</span>&#125;|<span class="number">8</span>\d&#123;<span class="number">3</span>&#125;|<span class="number">7</span>(?:[<span class="number">35678</span>]\d&#123;<span class="number">2</span>&#125;|<span class="number">4</span>(?:<span class="number">0</span>\d|<span class="number">1</span>[<span class="number">0</span><span class="number">-2</span>]|<span class="number">9</span>\d))|<span class="number">9</span>[<span class="number">189</span>]\d&#123;<span class="number">2</span>&#125;|<span class="number">66</span>\d&#123;<span class="number">2</span>&#125;)\d&#123;<span class="number">6</span>&#125;$/.test(</span><br><span class="line">    tel,</span><br><span class="line">  );</span><br></pre></td></tr></table></figure>
+<p>测试用例：测试框架使用 ava</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 所有正确的前缀</span></span><br><span class="line"><span class="keyword">const</span> correctPrefix = [</span><br><span class="line">  <span class="comment">// 移动</span></span><br><span class="line">  <span class="string">'1340'</span>,</span><br><span class="line">  <span class="string">'1341'</span>,</span><br><span class="line">  <span class="string">'1342'</span>,</span><br><span class="line">  <span class="string">'1343'</span>,</span><br><span class="line">  <span class="string">'1344'</span>,</span><br><span class="line">  <span class="string">'1345'</span>,</span><br><span class="line">  <span class="string">'1346'</span>,</span><br><span class="line">  <span class="string">'1347'</span>,</span><br><span class="line">  <span class="string">'1348'</span>,</span><br><span class="line">  <span class="string">'135'</span>,</span><br><span class="line">  <span class="string">'136'</span>,</span><br><span class="line">  <span class="string">'137'</span>,</span><br><span class="line">  <span class="string">'138'</span>,</span><br><span class="line">  <span class="string">'139'</span>,</span><br><span class="line">  <span class="string">'150'</span>,</span><br><span class="line">  <span class="string">'151'</span>,</span><br><span class="line">  <span class="string">'152'</span>,</span><br><span class="line">  <span class="string">'157'</span>,</span><br><span class="line">  <span class="string">'158'</span>,</span><br><span class="line">  <span class="string">'159'</span>,</span><br><span class="line">  <span class="string">'178'</span>,</span><br><span class="line">  <span class="string">'182'</span>,</span><br><span class="line">  <span class="string">'183'</span>,</span><br><span class="line">  <span class="string">'184'</span>,</span><br><span class="line">  <span class="string">'187'</span>,</span><br><span class="line">  <span class="string">'188'</span>,</span><br><span class="line">  <span class="string">'198'</span>,</span><br><span class="line">  <span class="comment">// 联通</span></span><br><span class="line">  <span class="string">'130'</span>,</span><br><span class="line">  <span class="string">'131'</span>,</span><br><span class="line">  <span class="string">'132'</span>,</span><br><span class="line">  <span class="string">'155'</span>,</span><br><span class="line">  <span class="string">'156'</span>,</span><br><span class="line">  <span class="string">'166'</span>,</span><br><span class="line">  <span class="string">'175'</span>,</span><br><span class="line">  <span class="string">'176'</span>,</span><br><span class="line">  <span class="string">'185'</span>,</span><br><span class="line">  <span class="string">'186'</span>,</span><br><span class="line">  <span class="comment">// 电信</span></span><br><span class="line">  <span class="string">'133'</span>,</span><br><span class="line">  <span class="string">'1349'</span>,</span><br><span class="line">  <span class="string">'153'</span>,</span><br><span class="line">  <span class="string">'173'</span>,</span><br><span class="line">  <span class="string">'17400'</span>,</span><br><span class="line">  <span class="string">'17401'</span>,</span><br><span class="line">  <span class="string">'17402'</span>,</span><br><span class="line">  <span class="string">'17403'</span>,</span><br><span class="line">  <span class="string">'17404'</span>,</span><br><span class="line">  <span class="string">'17405'</span>,</span><br><span class="line">  <span class="string">'177'</span>,</span><br><span class="line">  <span class="string">'180'</span>,</span><br><span class="line">  <span class="string">'181'</span>,</span><br><span class="line">  <span class="string">'189'</span>,</span><br><span class="line">  <span class="string">'191'</span>,</span><br><span class="line">  <span class="string">'199'</span>,</span><br><span class="line">  <span class="comment">// 海事卫星通信</span></span><br><span class="line">  <span class="string">'1749'</span>,</span><br><span class="line">  <span class="comment">// 应急通信</span></span><br><span class="line">  <span class="string">'17406'</span>,</span><br><span class="line">  <span class="string">'17407'</span>,</span><br><span class="line">  <span class="string">'17408'</span>,</span><br><span class="line">  <span class="string">'17409'</span>,</span><br><span class="line">  <span class="string">'17410'</span>,</span><br><span class="line">  <span class="string">'17411'</span>,</span><br><span class="line">  <span class="string">'17412'</span>,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 产生[a,b]的随机整数</span></span><br><span class="line"><span class="keyword">const</span> generateNumber = <span class="function">(<span class="params">a, b</span>) =&gt;</span> <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * (b - a + <span class="number">1</span>) + a);</span><br><span class="line"><span class="keyword">const</span> n = <span class="number">100</span>; <span class="comment">// 每个 scheme 生成 100个随机电话</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 产生基于以上前缀的随机电话号码，每个前缀模式产生 100(n) 个</span></span><br><span class="line"><span class="keyword">const</span> generateRandomPhoneNumber = <span class="function"><span class="params">prefix</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> result = [];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; prefix.length; i++) &#123;</span><br><span class="line">    <span class="comment">// 需要生成的数字的长度</span></span><br><span class="line">    <span class="keyword">let</span> length = <span class="number">11</span> - prefix[i].length;</span><br><span class="line">    <span class="comment">// 生成 n 个长度为 length 的数字</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">      <span class="comment">// 生成长度为 n 的数字</span></span><br><span class="line">      <span class="keyword">let</span> current = <span class="string">''</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> k = <span class="number">0</span>; k &lt; length; k++) &#123;</span><br><span class="line">        current += generateNumber(<span class="number">0</span>, <span class="number">9</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      result.push(prefix[i] + current);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 分别产生 10000 个 3 位 4 位和 5 位不满足前缀的电话号码</span></span><br><span class="line"><span class="keyword">const</span> generatePrefix = <span class="function"><span class="params">length</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> m = <span class="number">1000</span>;</span><br><span class="line">  <span class="keyword">const</span> result = [];</span><br><span class="line">  <span class="comment">// 生成 m 个长度为 length 的数字</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; m; j++) &#123;</span><br><span class="line">    <span class="comment">// 生成长度为 n 的数字</span></span><br><span class="line">    <span class="keyword">let</span> current = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> k = <span class="number">0</span>; k &lt; length; k++) &#123;</span><br><span class="line">      current += generateNumber(<span class="number">0</span>, <span class="number">9</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    result.push(current);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result.filter(<span class="function"><span class="params">item</span> =&gt;</span> correctPrefix.indexOf(item) === <span class="number">-1</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> prefix3 = generatePrefix(<span class="number">3</span>);</span><br><span class="line"><span class="keyword">const</span> prefix4 = generatePrefix(<span class="number">4</span>);</span><br><span class="line"><span class="keyword">const</span> prefix5 = generatePrefix(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">test(<span class="string">'测试手机号是否合法'</span>, t =&gt; &#123;</span><br><span class="line">  <span class="comment">// plan</span></span><br><span class="line">  t.plan(<span class="number">4</span>);</span><br><span class="line">  <span class="comment">// true</span></span><br><span class="line">  t.true(</span><br><span class="line">    generateRandomPhoneNumber(correctPrefix).every(<span class="function"><span class="params">item</span> =&gt;</span> isValidChinaMobilePhoneNumber(item)),</span><br><span class="line">    <span class="string">''</span>,</span><br><span class="line">  );</span><br><span class="line">  t.true(</span><br><span class="line">    generateRandomPhoneNumber(prefix3)</span><br><span class="line">      .filter(<span class="function"><span class="params">item</span> =&gt;</span> correctPrefix.every(<span class="function"><span class="params">value</span> =&gt;</span> !item.startsWith(value)))</span><br><span class="line">      .every(<span class="function"><span class="params">item</span> =&gt;</span> !isValidChinaMobilePhoneNumber(item)),</span><br><span class="line">    <span class="string">''</span>,</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  t.true(</span><br><span class="line">    generateRandomPhoneNumber(prefix4)</span><br><span class="line">      .filter(<span class="function"><span class="params">item</span> =&gt;</span> correctPrefix.every(<span class="function"><span class="params">value</span> =&gt;</span> !item.startsWith(value)))</span><br><span class="line">      .every(<span class="function"><span class="params">item</span> =&gt;</span> !isValidChinaMobilePhoneNumber(item)),</span><br><span class="line">    <span class="string">''</span>,</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  t.true(</span><br><span class="line">    generateRandomPhoneNumber(prefix5)</span><br><span class="line">      .filter(<span class="function"><span class="params">item</span> =&gt;</span> correctPrefix.every(<span class="function"><span class="params">value</span> =&gt;</span> !item.startsWith(value)))</span><br><span class="line">      .every(<span class="function"><span class="params">item</span> =&gt;</span> !isValidChinaMobilePhoneNumber(item)),</span><br><span class="line">    <span class="string">''</span>,</span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>Author: </span>
+      <a href="http://wfk007.github.io">王富康</a>
+    </p>
+    <p class="copyright-item">
+      <span>Link: </span>
+      <a href="http://wfk007.github.io/2019/11/06/testCaseForPhoneNumber/">http://wfk007.github.io/2019/11/06/testCaseForPhoneNumber/</a>
+    </p>
+    <p class="copyright-item">
+      <span>License: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+  <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">Reward</label>
+    <div class="qr-code">
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/wechat.png" title="wechat">
+        </label>
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/alipay.png" title="alipay">
+        </label>
+      
+    </div>
+  </div>
+
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2019/09/02/compiler/">
+        <span class="next-text nav-default">一个简单的编译器</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://leetcode.com/wfk007" class="iconfont icon-LeetCode" title="LeetCode"></a>
+        
+      
+    
+      
+        
+          <a href="https://github.com/wfk007" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">王富康</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://wfk007.github.io/2019/11/06/testCaseForPhoneNumber/';
+        this.page.identifier = '2019/11/06/testCaseForPhoneNumber/';
+        this.page.title = '中国大陆手机号的测试用例';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//anduins-blog.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+  
+
+  
+
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>
