@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="五一隔离期间刷的 LeetCode 动态规划算法心得体会">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Anduin's Blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0">
+
+
+
+<link rel="canonical" href="http://wfk007.github.io/2020/05/04/dynamic-programming/">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> 动态规划算法 - Anduin's Blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Anduin's Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            Categories
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            About
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Anduin's Blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              Home
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              Archives
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              Categories
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              About
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          动态规划算法
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-05-04
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/algorithm/">algorithm</a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Divisor-Game"><span class="toc-text">Divisor Game</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目来源"><span class="toc-text">题目来源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题目描述"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码和说明"><span class="toc-text">代码和说明</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Matrix-Block-Sum"><span class="toc-text">Matrix Block Sum</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目来源-1"><span class="toc-text">题目来源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题目描述-1"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码和说明-1"><span class="toc-text">代码和说明</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Count-Square-Submatrices-with-All-Ones"><span class="toc-text">Count Square Submatrices with All Ones</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目来源-2"><span class="toc-text">题目来源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题目描述-2"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码和说明-2"><span class="toc-text">代码和说明</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Minimum-Falling-Path-Sum"><span class="toc-text">Minimum Falling Path Sum</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目来源-3"><span class="toc-text">题目来源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题目描述-3"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码和说明-3"><span class="toc-text">代码和说明</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Palindromic-Substrings"><span class="toc-text">Palindromic Substrings</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目来源-4"><span class="toc-text">题目来源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题目描述-4"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码和说明-4"><span class="toc-text">代码和说明</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <p>记录一下最近在 LeetCode 刷的几道动态规划算法题</p>
+<h1 id="Divisor-Game"><a href="#Divisor-Game" class="headerlink" title="Divisor Game"></a>Divisor Game</h1><h2 id="题目来源"><a href="#题目来源" class="headerlink" title="题目来源"></a>题目来源</h2><p>链接：<a href="https://leetcode.com/problems/divisor-game/" target="_blank" rel="noopener">https://leetcode.com/problems/divisor-game/</a></p>
+<p>难度：easy</p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><blockquote>
+<p>给定一个数 N，A、B 两个人轮流取数 x，只能取 (0,N) 之间且为 N 的约数（N 对其求余等于 0），并且取完之后剩余的数为 N-x，从剩余数里面继续取，直到一方没法取值为止，另一方获胜。求给定一个数字 N，问先手的 Alice 是否一定可以获胜。 </p>
+</blockquote>
+<p>可以简单举几个例子帮助理解题目：A 先手</p>
+<p>N === 0 时，先手的一定输，结果为 false</p>
+<p>N === 1 时，先手的也没法选，结果为 false</p>
+<p>N === 2 时，先手的只能选择 1，后手输，结果为 true</p>
+<p>N === 3 时，先手的只能选择 1，选完以后 N === 2，后手胜，结果为 false</p>
+<p>N === 4 时，先手可以选择 1 也可以选择 2</p>
+<ul>
+<li>如果选 1，剩 3，相当于问，当 N===3 且 B 先手时，A 是否能赢，前面推出 N === 3 且 A 先手时，A 输，所以当 N===3 且 B 先手时，A 能赢</li>
+<li>如果选 2，剩 2，由前面 N === 2 的结论知，A 会输</li>
+<li>如果 A 先手，A 有先手选择权，所以当 N === 4 时，结果为 true</li>
+</ul>
+<h2 id="代码和说明"><a href="#代码和说明" class="headerlink" title="代码和说明"></a>代码和说明</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// dp[i] 即：当 A 先手且当前剩余数为 i 时，A 是否一定赢</span></span><br><span class="line"><span class="comment">// basecase 为 N === 0/1/2 的情形</span></span><br><span class="line"><span class="comment">// 状态转移方程：dp[i] = &#123; dp[m] || dp[n]...|i%m===0,i%n===0&#125;，所有约数 dp 子项求或运算</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> divisorGame = <span class="function"><span class="keyword">function</span> (<span class="params">N</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// N === 0/1/2</span></span><br><span class="line">  <span class="keyword">const</span> dp = [<span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">true</span>];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt;= N; i++) &#123;</span><br><span class="line">    <span class="comment">// 如果未设置过</span></span><br><span class="line">    <span class="keyword">if</span> (dp[i] === <span class="literal">undefined</span>) &#123;</span><br><span class="line">      <span class="comment">// 找到从[1,i-1]的所有约数</span></span><br><span class="line">      <span class="keyword">let</span> currentResult = <span class="literal">false</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">1</span>; j &lt; i; j++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % j === <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="keyword">if</span> (dp[i - j] === <span class="literal">false</span>) &#123;</span><br><span class="line">            currentResult = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      dp[i] = currentResult;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> dp[N];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="Matrix-Block-Sum"><a href="#Matrix-Block-Sum" class="headerlink" title="Matrix Block Sum"></a>Matrix Block Sum</h1><h2 id="题目来源-1"><a href="#题目来源-1" class="headerlink" title="题目来源"></a>题目来源</h2><p><a href="https://leetcode.com/problems/matrix-block-sum/" target="_blank" rel="noopener">https://leetcode.com/problems/matrix-block-sum/</a></p>
+<p>难度：medium</p>
+<h2 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h2><blockquote>
+<p>给定一个 m*n 的矩阵 mat 和一个正整数 K，返回一个 answer 数组，answer[i][j] 是所有 mat[r][c] 之和，r∈[i-K,i+K]，c∈[j-K,j+K]，并且 r/c 在数组 mat 中都是有效的位置</p>
+</blockquote>
+<h2 id="代码和说明-1"><a href="#代码和说明-1" class="headerlink" title="代码和说明"></a>代码和说明</h2><p>题目求的是矩形区域的面积，可以采用暴力O(n^4) 的方法求解，代码如下：遍历 mat 二维数组，对每个 i/j 计算所有满足条件的 r/c 之和，思路比较简单。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> matrixBlockSum = <span class="function"><span class="keyword">function</span> (<span class="params">mat, K</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// fill([]) 的问题，对象引用同一个</span></span><br><span class="line">  <span class="comment">// const answer = new Array(mat.length).fill([]);</span></span><br><span class="line">  <span class="keyword">const</span> answer = <span class="keyword">new</span> <span class="built_in">Array</span>(mat.length).fill(<span class="number">0</span>).map(<span class="function">(<span class="params">item</span>) =&gt;</span> []);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; mat.length; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; mat[i].length; j++) &#123;</span><br><span class="line">      <span class="comment">// 计算 dp[r][c] =  i - K &lt;= r &lt;= i + K, j - K &lt;= c &lt;= j + K</span></span><br><span class="line">      <span class="keyword">let</span> currentSum = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> r = i - K; r &lt;= i + K; r++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> c = j - K; c &lt;= j + K; c++) &#123;</span><br><span class="line">          <span class="keyword">if</span> (r &gt;= <span class="number">0</span> &amp;&amp; r &lt; mat.length &amp;&amp; c &gt;= <span class="number">0</span> &amp;&amp; c &lt; mat[i].length) &#123;</span><br><span class="line">            currentSum += mat[r][c];</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      answer[i][j] = currentSum;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> answer;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>暴力法重复计算的次数较多，时间复杂度比较高，下面采用了动态规划法对其进行了优化：</p>
+<p>矩形之和的求解利用了左边、上面和左上边三个大矩阵的结果，最后实际求解矩阵时，利用 dp 的结果可以很方便的求解出答案</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// dp[i][j]：以 (i,j) 为右下角的矩阵之和</span></span><br><span class="line"><span class="comment">// basecase 为第一行和第一列，即为 mat[i][j]</span></span><br><span class="line"><span class="comment">// 状态转移方程：dp[i][j] = dp[i - 1][j] + dp[i][j - 1] - dp[i - 1][j - 1] + mat[i][j]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> matrixBlockSum = <span class="function"><span class="keyword">function</span> (<span class="params">mat, K</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> dp = <span class="keyword">new</span> <span class="built_in">Array</span>(mat.length).fill(<span class="number">0</span>).map(<span class="function">(<span class="params">item</span>) =&gt;</span> []);</span><br><span class="line">  <span class="keyword">const</span> answer = <span class="keyword">new</span> <span class="built_in">Array</span>(mat.length).fill(<span class="number">0</span>).map(<span class="function">(<span class="params">item</span>) =&gt;</span> []);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; mat.length; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; mat[i].length; j++) &#123;</span><br><span class="line">      dp[i][j] = mat[i][j];</span><br><span class="line">      <span class="keyword">if</span> (i - <span class="number">1</span> &gt;= <span class="number">0</span> &amp;&amp; j - <span class="number">1</span> &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        dp[i][j] += dp[i - <span class="number">1</span>][j] + dp[i][j - <span class="number">1</span>] - dp[i - <span class="number">1</span>][j - <span class="number">1</span>];</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (i - <span class="number">1</span> &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        dp[i][j] += dp[i - <span class="number">1</span>][j];</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (j - <span class="number">1</span> &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        dp[i][j] += dp[i][j - <span class="number">1</span>];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * r、c、K：</span></span><br><span class="line"><span class="comment">   * rl = i-K</span></span><br><span class="line"><span class="comment">   * rr = i+K</span></span><br><span class="line"><span class="comment">   * cl = j-K</span></span><br><span class="line"><span class="comment">   * cr = j+K</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * answer[r][c] = dp[rr][cr] - dp[rr][cl-1] - dp[rl-1][cr] + dp[rl-1][cl-1]</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; mat.length; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; mat[i].length; j++) &#123;</span><br><span class="line">      <span class="comment">// 处理超出的范围</span></span><br><span class="line">      <span class="keyword">let</span> rl = i - K &lt; <span class="number">0</span> ? <span class="number">0</span> : i - K,</span><br><span class="line">        rr = i + K &gt; mat.length - <span class="number">1</span> ? mat.length - <span class="number">1</span> : i + K,</span><br><span class="line">        cl = j - K &lt; <span class="number">0</span> ? <span class="number">0</span> : j - K,</span><br><span class="line">        cr = j + K &gt; mat[i].length - <span class="number">1</span> ? mat[i].length - <span class="number">1</span> : j + K;</span><br><span class="line">      answer[i][j] = dp[rr][cr];</span><br><span class="line">      <span class="keyword">if</span> (cl - <span class="number">1</span> &gt;= <span class="number">0</span> &amp;&amp; rl - <span class="number">1</span> &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        answer[i][j] =</span><br><span class="line">          answer[i][j] - dp[rr][cl - <span class="number">1</span>] - dp[rl - <span class="number">1</span>][cr] + dp[rl - <span class="number">1</span>][cl - <span class="number">1</span>];</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cl - <span class="number">1</span> &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        answer[i][j] -= dp[rr][cl - <span class="number">1</span>];</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (rl - <span class="number">1</span> &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        answer[i][j] -= dp[rl - <span class="number">1</span>][cr];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> answer;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="Count-Square-Submatrices-with-All-Ones"><a href="#Count-Square-Submatrices-with-All-Ones" class="headerlink" title="Count Square Submatrices with All Ones"></a>Count Square Submatrices with All Ones</h1><h2 id="题目来源-2"><a href="#题目来源-2" class="headerlink" title="题目来源"></a>题目来源</h2><p><a href="https://leetcode.com/problems/count-square-submatrices-with-all-ones/" target="_blank" rel="noopener">https://leetcode.com/problems/count-square-submatrices-with-all-ones/</a></p>
+<p>难度：medium</p>
+<h2 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h2><blockquote>
+<p>给定一个只包括 0 和 1 的二维数组，返回所有子正方形的个数，正方形不能含 0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt; Input: matrix =</span><br><span class="line">&gt; [</span><br><span class="line">&gt;   [0,1,1,1],</span><br><span class="line">&gt;   [1,1,1,1],</span><br><span class="line">&gt;   [0,1,1,1]</span><br><span class="line">&gt; ]</span><br><span class="line">&gt; Output: 15</span><br><span class="line">&gt; Explanation: </span><br><span class="line">&gt; There are 10 squares of side 1.</span><br><span class="line">&gt; There are 4 squares of side 2.</span><br><span class="line">&gt; There is  1 square of side 3.</span><br><span class="line">&gt; Total number of squares = 10 + 4 + 1 = 15.</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt; Input: matrix = </span><br><span class="line">&gt; [</span><br><span class="line">&gt;   [1,0,1],</span><br><span class="line">&gt;   [1,1,0],</span><br><span class="line">&gt;   [1,1,0]</span><br><span class="line">&gt; ]</span><br><span class="line">&gt; Output: 7</span><br><span class="line">&gt; Explanation: </span><br><span class="line">&gt; There are 6 squares of side 1.  </span><br><span class="line">&gt; There is 1 square of side 2. </span><br><span class="line">&gt; Total number of squares = 6 + 1 = 7.</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="代码和说明-2"><a href="#代码和说明-2" class="headerlink" title="代码和说明"></a>代码和说明</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * dp[i][j]：以 i/j 为右下角的矩阵有多少个 1*1、2*2、3*3... 矩阵</span></span><br><span class="line"><span class="comment"> * 例如：</span></span><br><span class="line"><span class="comment"> * [</span></span><br><span class="line"><span class="comment"> *  [0,1,1,1]         [0,1,1,1]</span></span><br><span class="line"><span class="comment"> *  [1,1,1,1]   -&gt;    [1,1,2,2]</span></span><br><span class="line"><span class="comment"> *  [0,1,1,1]         [0,1,2,3]</span></span><br><span class="line"><span class="comment"> * ]</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * basecase：第一行和第一列</span></span><br><span class="line"><span class="comment"> * 状态转移方程：dp[i][j] =</span></span><br><span class="line"><span class="comment">              Math.min(...[dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]]) + 1;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> countSquares = <span class="function"><span class="keyword">function</span> (<span class="params">matrix</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> result = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">const</span> dp = <span class="keyword">new</span> <span class="built_in">Array</span>(matrix.length).fill(<span class="number">0</span>).map(<span class="function">(<span class="params">item</span>) =&gt;</span> []);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; matrix.length; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; matrix[i].length; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (matrix[i][j] === <span class="number">0</span>) &#123;</span><br><span class="line">        dp[i][j] = <span class="number">0</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (i - <span class="number">1</span> &gt;= <span class="number">0</span> &amp;&amp; j - <span class="number">1</span> &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="comment">// 左、右和左上角存在</span></span><br><span class="line">          <span class="comment">// 如有三者有任意一个等于 0，则 dp[i][j]=1，否则等于三者最小值 +1</span></span><br><span class="line">          <span class="keyword">if</span> (</span><br><span class="line">            matrix[i - <span class="number">1</span>][j] === <span class="number">0</span> ||</span><br><span class="line">            matrix[i][j - <span class="number">1</span>] === <span class="number">0</span> ||</span><br><span class="line">            matrix[i - <span class="number">1</span>][j - <span class="number">1</span>] === <span class="number">0</span></span><br><span class="line">          ) &#123;</span><br><span class="line">            dp[i][j] = <span class="number">1</span>;</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            dp[i][j] =</span><br><span class="line">              <span class="built_in">Math</span>.min(...[dp[i - <span class="number">1</span>][j], dp[i][j - <span class="number">1</span>], dp[i - <span class="number">1</span>][j - <span class="number">1</span>]]) + <span class="number">1</span>;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">// 左、右或左上角不存在</span></span><br><span class="line">          dp[i][j] = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      result += dp[i][j];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="Minimum-Falling-Path-Sum"><a href="#Minimum-Falling-Path-Sum" class="headerlink" title="Minimum Falling Path Sum"></a>Minimum Falling Path Sum</h1><h2 id="题目来源-3"><a href="#题目来源-3" class="headerlink" title="题目来源"></a>题目来源</h2><p><a href="https://leetcode.com/problems/minimum-falling-path-sum/" target="_blank" rel="noopener">https://leetcode.com/problems/minimum-falling-path-sum/</a></p>
+<p>难度：medium</p>
+<h2 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h2><blockquote>
+<p>给定一个 n*n 的二维数组，找到一条从第一行走到最后一行的最短路径。有条件限制：例如当前在第 i行 j 列，走到 i+1 行时，只能去下标合法的 j-1、j 或 j+1 列</p>
+</blockquote>
+<h2 id="代码和说明-3"><a href="#代码和说明-3" class="headerlink" title="代码和说明"></a>代码和说明</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// dp[i][j]：所有以 dp[i][j] 为终点的线路的最小值</span></span><br><span class="line"><span class="comment">// basecase：第一行</span></span><br><span class="line"><span class="comment">// 状态转移方程：dp[i][j] = Math.min(...[dp[i-1][j],dp[i-1][j-1],dp[i-1][j+1]]) + A[i][j]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> minFallingPathSum = <span class="function"><span class="keyword">function</span> (<span class="params">A</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> dp = <span class="keyword">new</span> <span class="built_in">Array</span>(A.length).fill(<span class="number">0</span>).map(<span class="function">(<span class="params">item</span>) =&gt;</span> []);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; A.length; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; A[i].length; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (i === <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 初始化basecase</span></span><br><span class="line">        dp[i][j] = A[i][j];</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        dp[i][j] = dp[i - <span class="number">1</span>][j];</span><br><span class="line">        <span class="keyword">if</span> (j - <span class="number">1</span> &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">          dp[i][j] = <span class="built_in">Math</span>.min(dp[i][j], dp[i - <span class="number">1</span>][j - <span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (j + <span class="number">1</span> &lt; A[i].length) &#123;</span><br><span class="line">          dp[i][j] = <span class="built_in">Math</span>.min(dp[i][j], dp[i - <span class="number">1</span>][j + <span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        dp[i][j] += A[i][j];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Math</span>.min(...dp[dp.length - <span class="number">1</span>]);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="Palindromic-Substrings"><a href="#Palindromic-Substrings" class="headerlink" title="Palindromic Substrings"></a>Palindromic Substrings</h1><h2 id="题目来源-4"><a href="#题目来源-4" class="headerlink" title="题目来源"></a>题目来源</h2><p><a href="https://leetcode.com/problems/palindromic-substrings/" target="_blank" rel="noopener">https://leetcode.com/problems/palindromic-substrings/</a></p>
+<p>难度：medium</p>
+<h2 id="题目描述-4"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h2><blockquote>
+<p>给定一个字符串，返回字符串中回文字串的个数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; Input: &quot;abc&quot;</span><br><span class="line">&gt; Output: 3</span><br><span class="line">&gt; Explanation: Three palindromic strings: &quot;a&quot;, &quot;b&quot;, &quot;c&quot;.</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; Input: &quot;aaa&quot;</span><br><span class="line">&gt; Output: 6</span><br><span class="line">&gt; Explanation: Six palindromic strings: &quot;a&quot;, &quot;a&quot;, &quot;a&quot;, &quot;aa&quot;, &quot;aa&quot;, &quot;aaa&quot;.</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="代码和说明-4"><a href="#代码和说明-4" class="headerlink" title="代码和说明"></a>代码和说明</h2><blockquote>
+<p>有个小问题需要注意，动态规划的 dp 是依赖 dp[i+1][j-1] 的值，所以在计算 dp 前，其依赖的值需要提前被计算，所以可以修改一下遍历方式，斜着遍历：</p>
+<p>如：(0,0)、(1,1,)、(2,2)…、(0,1)、(1,2)、(2,3)…、(0,2)、(1,3)、(2,4)…</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// dp[i][j]：以 i 开始 j 结尾的字符串是不是回文</span></span><br><span class="line"><span class="comment">// basecase：长度为 1：true; 长度为 2：都相同=&gt;true，不相同=&gt;false</span></span><br><span class="line"><span class="comment">// 状态转移方程：dp[i][j] = dp[i+1][j-1] &amp;&amp; s[i]===s[j]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> countSubstrings = <span class="function"><span class="keyword">function</span> (<span class="params">s</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> result = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">const</span> dp = <span class="keyword">new</span> <span class="built_in">Array</span>(s.length).fill(<span class="number">0</span>).map(<span class="function">(<span class="params">item</span>) =&gt;</span> []);</span><br><span class="line">  <span class="comment">// 斜着遍历</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> step = <span class="number">0</span>; step &lt; s.length; step++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; s.length - step; i++) &#123;</span><br><span class="line">      <span class="keyword">let</span> j = step + i;</span><br><span class="line">      <span class="comment">// 处理长度为1</span></span><br><span class="line">      <span class="keyword">if</span> (i === j) &#123;</span><br><span class="line">        dp[i][j] = <span class="literal">true</span>;</span><br><span class="line">        result++;</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (i + <span class="number">1</span> === j) &#123;</span><br><span class="line">        <span class="comment">// 处理长度为2</span></span><br><span class="line">        <span class="keyword">if</span> (s[i] === s[j]) &#123;</span><br><span class="line">          dp[i][j] = <span class="literal">true</span>;</span><br><span class="line">          result++;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 长度&gt;=3</span></span><br><span class="line">        <span class="keyword">if</span> (dp[i + <span class="number">1</span>][j - <span class="number">1</span>] &amp;&amp; s[i] === s[j]) &#123;</span><br><span class="line">          dp[i][j] = <span class="literal">true</span>;</span><br><span class="line">          result++;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>Author: </span>
+      <a href="http://wfk007.github.io">王富康</a>
+    </p>
+    <p class="copyright-item">
+      <span>Link: </span>
+      <a href="http://wfk007.github.io/2020/05/04/dynamic-programming/">http://wfk007.github.io/2020/05/04/dynamic-programming/</a>
+    </p>
+    <p class="copyright-item">
+      <span>License: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+  <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">Reward</label>
+    <div class="qr-code">
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/wechat.png" title="wechat">
+        </label>
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/alipay.png" title="alipay">
+        </label>
+      
+    </div>
+  </div>
+
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2020/03/28/fibonacci/">
+        <span class="next-text nav-default">斐波那契数列的7种解法</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://leetcode.com/wfk007" class="iconfont icon-LeetCode" title="LeetCode"></a>
+        
+      
+    
+      
+        
+          <a href="https://github.com/wfk007" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2020
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">王富康</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://wfk007.github.io/2020/05/04/dynamic-programming/';
+        this.page.identifier = '2020/05/04/dynamic-programming/';
+        this.page.title = '动态规划算法';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//anduins-blog.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+  
+
+  
+
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>
